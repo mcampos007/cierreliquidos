@@ -30,9 +30,16 @@ Route::middleware(['auth', 'user'])->prefix('user')->namespace('User')->group(fu
 });
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->namespace('Admin')->group(function () {
-	Route::get('/products','ProductController@index');			//LIsta de Productos
-	Route::put('/products/{id}', 'ProductController@update');	//Actualizar datos del producto
-	Route::get('/products/{id}/edit','ProductController@edit'); 					//Editar aforadores
+	//Productos
+	Route::get('/products','ProductController@index');				//LIsta de Productos
+	Route::get('/products/create','ProductController@create');		//LIsta de Productos
+	Route::post('/products','ProductController@store');				//Registrar alta del Producto
+	Route::put('/products/{id}', 'ProductController@update');		//Actualizar datos del producto
+	Route::get('/products/{id}/edit','ProductController@edit'); 	//Editar aforadores
+	//Surtidores
+	Route::get('/surtidors','SurtidorController@index');			//LIsta de Surtidores
+	Route::get('/surtidors/{id}/edit', "SurtidorController@edit");	//Edita Surtidor
+	Route::put('/surtidors/update/{id}', "SurtidorController@update");	//Update Surtidor
 
 	//Route::get('/turnonuevo','TurnoController@turnonuevo'); 						//crear un turno nuevo
 	

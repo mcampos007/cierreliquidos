@@ -15,19 +15,19 @@ class ProductsTableSeeder extends Seeder
         DB::table('products')->insert([
             [
                 'name' => 'Nafta Infinia',
-                'price' => 258,
+                'price' => 352.9,
             ],
             [
                 'name' => 'Nafta Super',
-                'price' => 207.9,  
+                'price' => 284.1,  
             ],
             [
                 'name' => 'Infinia diesel',
-                'price' => 299.10,
+                'price' => 390.3,
             ],
             [
                 'name' => 'D 500',
-                'price' => 222.7,  
+                'price' => 304.1,  
             ],
             // Agrega más registros si lo deseas
         ]);

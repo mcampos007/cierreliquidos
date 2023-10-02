@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Surtidor;
+use App\Product;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Product;
-
-class ProductController extends Controller
+class SurtidorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +18,8 @@ class ProductController extends Controller
     public function index()
     {
         //
-        $products = Product::all();
-        return view('admin.products.index')->with(compact('products'));
+        $surtidors = Surtidor::paginate(10);
+        return view('admin.surtidors.index')->with(compact('surtidors'));
     }
 
     /**
@@ -29,8 +30,6 @@ class ProductController extends Controller
     public function create()
     {
         //
-        //$product = new Product();
-        return view('admin.products.create');
     }
 
     /**
@@ -42,7 +41,6 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
-        dd($request);
     }
 
     /**
@@ -65,9 +63,9 @@ class ProductController extends Controller
     public function edit($id)
     {
         //
-        $product = Product::findOrFail($id);
-
-        return view('admin.products.edit')->with(compact('product'));
+        $surtidor = Surtidor::findOrFail($id);
+        $products = Product::all();
+        return view('admin.surtidors.edit')->with(compact('surtidor','products'));
     }
 
     /**
@@ -80,17 +78,12 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         //
-
-        $product = Product::findOrFail($id);
-
-        $product->name = $request->input('name');
-        $product->price = $request->input('price');
-
-        $product->save();
-
-        $notification = "Se actualizaron los datos del producto";
-
-        return redirect('admin/products')->with(compact('notification'));
+        $surtidor = Surtidor::findOrFail($id);
+        $surtidor->name = $request->input('name');
+        $surtidor->product_id = $request->input('producto');
+        $surtidor->lectura_actual = $request->input('lectura_actual');
+        $surtidor->save();
+        return redirect('/admin/surtidors');
     }
 
     /**
