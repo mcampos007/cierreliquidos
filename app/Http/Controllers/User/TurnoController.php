@@ -290,12 +290,10 @@ class TurnoController extends Controller
 
     // Registrar los aforadores
     public function storeaforadores(Request $request){
-        //dd($request);
         $fecha = $request->input('fecha');
         $turno = $request->input('turno');
         $user_id = auth()->user()->id;
         $turnonuevo = Turno::where('turno',$turno)->where('fecha',$fecha)->first();
-        
         if (!$turnonuevo){
             // Es un nuevo turno
             $turnonuevo = new Turno();
@@ -318,11 +316,10 @@ class TurnoController extends Controller
                 $detalle->save();
 
                 // Actualizar la lectura del surtidor
-                $this->actualizar_lectura_surtidor($detalle->surtidor_id, $detalle->lectura_final);
+                //$this->actualizar_lectura_surtidor($detalle->surtidor_id, $detalle->lectura_final);
             }
         }else   //el turno ya existe
         {     
-
             $lecturas = $request->input('l_final');
             $surtidores = $request->input('surtidor_id');
             $prices = $request->input('price');
@@ -331,13 +328,12 @@ class TurnoController extends Controller
             //foreach ($surtidors as $key=> $surtidor)
             {
                 // Registrar el detalle
-                $detalle = new TurnoDetail();
-                $detalle->turno_id = $turnonuevo->id;
-                $detalle->surtidor_id = $surtidores[$key];
+                $detalle = TurnoDetail::where('turno_id',$turnonuevo->id)->where('surtidor_id',  $surtidores[$key])->first();
+                //$detalle->turno_id = $turnonuevo->id;
+                //$detalle->surtidor_id = $surtidores[$key];
                 $detalle->lectura_inicial = $this->lectura_actual_surtidor($surtidores[$key]);
                 $detalle->lectura_final = $lecturas[$key];
-                $detalle->price=$prices[$key];
-                
+                $detalle->price=$prices[$key];         
                 if ($detalle->lectura_final < $detalle->lectura_inicial )
                 {
                     $notification = 'La lectura final debe ser mayor o igual a la lectura inicial';
@@ -345,18 +341,16 @@ class TurnoController extends Controller
                 }
 
                 $detalle->save();
-
-
+               // dd($detalle);
                 // Actualizar la lectura del surtidor
-                $this->actualizar_lectura_surtidor($detalle->surtidor_id, $detalle->lectura_final);
-                return redirect('/home');
+              //  $this->actualizar_lectura_surtidor($detalle->surtidor_id, $detalle->lectura_final);
+               
             }
-            
         }
         // Se llama a la edición para registrar los importes del turno
-
         // 
-        return redirect('/user/turno/edit/'.$turnonuevo->id);
+         return redirect('/home');
+        //return redirect('/user/turno/edit/'.$turnonuevo->id);
       //   return redirect('/home');
     }
 
