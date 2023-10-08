@@ -53,7 +53,7 @@
 
                     <div class="form-group">
                     <label for="lectura_actual">Lectura Actual:</label>
-                    <input type="number" name="lectura_actual" id="lectura_actual" class="form-control" step="0.01" value="{{ $surtidor->lectura_actual }} ">
+                    <input type="text" name="lectura_actual" id="lectura_actual" class="form-control" value="{{ $surtidor->lectura_actual }} ">
                     </div>
 
                     <!-- Agrega más campos aquí según tus necesidades -->
