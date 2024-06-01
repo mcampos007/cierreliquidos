@@ -9,7 +9,7 @@
                 </li>
                 <li>
                     <a href="http://presentation.infocam.com.ar">
-                       Quienes Somos
+                        Quienes Somos
                     </a>
                 </li>
                 <!-- <li>
@@ -25,7 +25,7 @@
             </ul>
         </nav>
         <div class="copyright pull-right">
-            &copy; 2020, made with <i class="fa fa-heart heart"></i> by Infocam
+            &copy; 2024, made with <i class="fa fa-heart heart"></i> by Infocam
         </div>
     </div>
 </footer>

@@ -1,10 +1,11 @@
 <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true"
+        v-pre>
         {{ Auth::user()->name }} <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
         <li>
-            <a href="{{ url('/home')}}">Registrar Nuevo Turno</a>
+            <a href="{{ url('/home') }}">Registrar Nuevo Turno</a>
         </li>
         <li>
             <a href="#">No definido</a>
@@ -34,18 +35,19 @@
                          document.getElementById('logout-form').submit();">
                 Desconectarse
             </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    {{ csrf_field() }}
-                </form>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                {{ csrf_field() }}
+            </form>
         </li>
     </ul>
 </li>
 <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"
+        aria-haspopup="true" v-pre>
         Cajas <span class="caret"></span>
     </a>
-    <ul class="dropdown-menu">
-        
+    {{-- <ul class="dropdown-menu">
+
         <li>
             <a href="{{ url('/usuario/cajas')}}">Cajas</a>
         </li>
@@ -60,7 +62,7 @@
         </li>
         <li>
             <a href="{{ url('/usuario/reportescajas')}}">Reportes</a>
-        </li>     
-        
-    </ul>
+        </li>
+
+    </ul> --}}
 </li>
