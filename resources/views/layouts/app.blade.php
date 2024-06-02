@@ -20,6 +20,10 @@
     <!-- CSS Files -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
     <link href=" {{ asset('css/material-kit.css') }}" rel="stylesheet" />
+
+    <!-- Sweetalert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
     @yield('styles')
 
 </head>
@@ -113,6 +117,9 @@
 
 <!-- Control Center for Material Kit: activating the ripples, parallax effects, scripts from the example pages etc -->
 <script src=" {{ asset('js/material-kit.js') }}" type="text/javascript"></script>
+
+<!-- Sweetalñert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 @yield('scripts')
 

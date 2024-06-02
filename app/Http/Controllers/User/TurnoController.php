@@ -16,7 +16,7 @@ class TurnoController extends Controller
     public function asignarFechaSistema()
     {
         $fechaSistema = Carbon::now()->toDateString();
-        
+
         return $fechaSistema;
     }
     // Asignar turno
@@ -24,9 +24,9 @@ class TurnoController extends Controller
     {
         $now = Carbon::now();
         $hora = $now->format('H:i');
-        
+
         $turno = "";
-        
+
         if ($hora >= '06:00' && $hora <= '14:00') {
             $turno = 'NOCHE';
         } elseif ($hora >= '14:01' && $hora <= '22:00') {
@@ -37,8 +37,8 @@ class TurnoController extends Controller
         elseif ($hora >= '00:00' && $hora <= '05:59') {
             $turno = 'TARDE';
         }
-        
-        
+
+
         return $turno;
     }
 
@@ -50,7 +50,7 @@ class TurnoController extends Controller
             $turno_Details = TurnoDetail::where('turno_id',$id)->get();
             if (count($turno_Details) == 0)
             {
-                $turno_Details = [];        
+                $turno_Details = [];
                 foreach($surtidores as $surtidor){
                     $turnoDetail = new TurnoDetail();
                     $turnoDetail->turno_id = NULL;
@@ -59,16 +59,16 @@ class TurnoController extends Controller
                     $turnoDetail->lectura_inicial = $surtidor->lectura_actual;
                     $turnoDetail->lectura_final = 0.0;
 
-                    $turno_Details[] = $turnoDetail;  
-                }    
-            }    
+                    $turno_Details[] = $turnoDetail;
+                }
+            }
             else
             {
                // dd($turno_Details);
             }
-            
+
         }else{
-            $turno_Details = [];        
+            $turno_Details = [];
             foreach($surtidores as $surtidor){
                 $turnoDetail = new TurnoDetail();
                 $turnoDetail->turno_id = NULL;
@@ -77,8 +77,8 @@ class TurnoController extends Controller
                 $turnoDetail->lectura_inicial = $surtidor->lectura_actual;
                 $turnoDetail->lectura_final = $surtidor->lectura_actual; //0.0;
 
-                $turno_Details[] = $turnoDetail;  
-            }      
+                $turno_Details[] = $turnoDetail;
+            }
         }
         return $turno_Details;
 
@@ -101,10 +101,10 @@ class TurnoController extends Controller
                     break;
                 case 'TARDE':
                     $t = 'NOCHE';
-                    
+
                     // Agrega un día a la fecha
                     $f = date('Y-m-d', strtotime($f . ' +1 day'));
-                    
+
                     break;
             }
 
@@ -128,8 +128,8 @@ class TurnoController extends Controller
             $turno->cheques = 0;
             $turno->otros = 0;
         }
-        
-        return view('user.turnonuevo')->with(compact('turno'));  
+
+        return view('user.turnonuevo')->with(compact('turno'));
     }
     // Total de litros en el turno
     public function total_litros($id){
@@ -145,7 +145,7 @@ class TurnoController extends Controller
     //Importe total en el turno
     public function importe_total($id){
         $importes = TurnoDetail::where('turno_id',$id)->get();
-        
+
         $importeturno = 0;
         foreach($importes as $importe){
             $litros = $importe->lectura_final - $importe->lectura_inicial;
@@ -163,8 +163,8 @@ class TurnoController extends Controller
         $turno = Turno::find($id);
         $turnoDetails = $turno->turnoDetails;
         $totales = array(
-                'litros' => $this->total_litros($turno->id),
-                'importe' => $this->importe_total($turno->id),
+                'litros' => number_format($this->total_litros($turno->id),2),
+                'importe' => number_format($this->importe_total($turno->id),2),
             );
         $notification = "";
         return view('user.editaforadores')->with(compact('turno','totales','turnoDetails','notification'));
@@ -172,7 +172,7 @@ class TurnoController extends Controller
 
     // Crear Turno o actualizar el turno existente
     public function crearturno(Request $request){
-        
+
         $mensajes = [
             'efectivo.required' => 'El campo efectivo es obligatorio.',
             'efectivo.numeric' => 'El campo efectivo debe ser un número.',
@@ -215,25 +215,25 @@ class TurnoController extends Controller
             'otros' => 'required|numeric|min:0',
             // Agrega otras reglas de validación si es necesario
         ], $mensajes);
-        
+
         // Verificar que no exista el turno
 
         $fecha = $request->input('fecha');
         $turno = $request->input('turno');
         $turnonuevo = Turno::where('fecha',$fecha)->where('turno',$turno)->get();
-        
+
         if (count($turnonuevo)==0)
         {
-        
+
             // Como no hay turno, se procede a crear uno nuevo
             $turnonuevo->id = NULL;
             $turnonuevo->turno = $turno;
             $turnonuevo->fecha = $fecha;
             //Como no hay turno, crear el detalle con los valores del surtidor
-            
-            
+
+
             $turnoDetails = $this->detallesdelturno(NULL);
-            
+
             $totales = array(
                 'litros' => 0,
                 'importe' => 0,
@@ -242,7 +242,7 @@ class TurnoController extends Controller
 
         }else{
             //Actualizar Turno
-            
+
             $turnonuevo = Turno::find($request->input('id'));
             $turnonuevo->fecha = $request->input('fecha');
             $turnonuevo->turno = $request->input('turno');
@@ -263,8 +263,8 @@ class TurnoController extends Controller
                 'litros' => $this->total_litros($turnonuevo->id),
                 'importe' => $this->importe_total($turnonuevo->id),
             );
-           
-             return redirect('/home');  
+
+             return redirect('/home');
         }
     }
 
@@ -319,7 +319,7 @@ class TurnoController extends Controller
                 //$this->actualizar_lectura_surtidor($detalle->surtidor_id, $detalle->lectura_final);
             }
         }else   //el turno ya existe
-        {     
+        {
             $lecturas = $request->input('l_final');
             $surtidores = $request->input('surtidor_id');
             $prices = $request->input('price');
@@ -333,7 +333,7 @@ class TurnoController extends Controller
                 //$detalle->surtidor_id = $surtidores[$key];
                 $detalle->lectura_inicial = $this->lectura_actual_surtidor($surtidores[$key]);
                 $detalle->lectura_final = $lecturas[$key];
-                $detalle->price=$prices[$key];         
+                $detalle->price=$prices[$key];
                 if ($detalle->lectura_final < $detalle->lectura_inicial )
                 {
                     $notification = 'La lectura final debe ser mayor o igual a la lectura inicial';
@@ -344,11 +344,11 @@ class TurnoController extends Controller
                // dd($detalle);
                 // Actualizar la lectura del surtidor
               //  $this->actualizar_lectura_surtidor($detalle->surtidor_id, $detalle->lectura_final);
-               
+
             }
         }
         // Se llama a la edición para registrar los importes del turno
-        // 
+        //
          return redirect('/home');
         //return redirect('/user/turno/edit/'.$turnonuevo->id);
       //   return redirect('/home');
@@ -357,7 +357,7 @@ class TurnoController extends Controller
     public function cerrarturno($id){
         $turno = Turno::findOrFail($id);
         return view('user.cerrarturno')->with(compact('turno'));
-        
+
     }
 
     public function confirmarcierreturno(Request $request){

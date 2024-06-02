@@ -16,7 +16,7 @@
 
     }
     .container-custom{
-        margin-left: 5px;
+        margin-left: 15px;
     }
 
 </style>
@@ -32,21 +32,6 @@
     </div>
 
     <div class="main main-raised">
-
-
-        @php
-            $pares = [];
-            $impares = [];
-            $cantAforadores = count($turnoDetails);
-            $mitad = floor($cantAforadores / 2);
-            foreach ($turnoDetails as $key => $turnoDetail) {
-                if ($key < $mitad) {
-                    $impares[] = $turnoDetail;
-                } else {
-                    $pares[] = $turnoDetail;
-                }
-            }
-        @endphp
         <h2 class="title text-center">Registrar Aforadores</h2>
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -65,143 +50,73 @@
                 <input type="hidden" name="id" id="id" value="{{ $turnonuevo->id }}">
                 <input type="hidden" name="cantsurtidores" id="cantsurtidores" value="{{ count($turnoDetails) }}">
 
-                <div class=" container-custom">
-                    <div class="row">
-                        <!-- Tabla de Pares -->
-                        <div class="col-md-6">
-                            <div class="table-responsive-sm">
-                                <table class="table table-custom">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Producto</th>
-                                            <th>Precio</th>
-                                            <th>Lectura Inicial</th>
-                                            <th>Lectura Final</th>
-                                            <th>Litros</th>
-                                            <th>Importe</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($impares as $key => $turnoDetail)
-                                            <tr>
-                                                <input type="hidden" name="surtidor_id[]" value="{{ ($key + 1) * 2 }}" />
-                                                <td class="text-center">{{ $key + 1 }}</td>
-                                                <td class="text-center">{{ $turnoDetail->surtidor->product->name }}
-                                                </td>
-                                                <td class="text-center">
-                                                    <input type="number"
-                                                        value="{{ $turnoDetail->surtidor->product->price }}" name="price[]"
-                                                        id="price_{{ $key + 1 }}" readonly style="width: 80px;" />
-                                                </td>
-                                                <!-- Lectura Inicial -->
-                                                <td class="text-center">
-                                                    <input type="number" value="{{ $turnoDetail->lectura_inicial }}"
-                                                        name="l_inicial_{{ $key + 1 }}"
-                                                        id="l_inicial_{{ $key + 1 }}" disabled
-                                                        style="width: 100px;" />
-                                                </td>
-                                                <!-- Lectura Actual -->
-                                                <td class="text-center">
-                                                    <input type="number" name="l_final[]" id="l_final_{{ $key + 1 }}"
-                                                        step="0.01"
-                                                        value="{{ old('l_final[]', $turnoDetail->lectura_final) }}"
-                                                        onchange="recalculateImporte({{ $key + 1 }})"
-                                                        style="width: 120px;" />
-                                                </td>
-                                                <!-- Litros -->
-                                                <td class="text-center">
-                                                    <input type="number" name="litros_{{ $key + 1 }}"
-                                                        id="litros_{{ $key + 1 }}" step="0.01" value="0.00"
-                                                        disabled style="width: 100px;" />
-                                                </td>
-                                                <!-- Importe -->
-                                                <td class="text-center">
-                                                    <input type="number" id="importe_{{ $key + 1 }}" name="importe[]"
-                                                        value="{{ old('importe[]') }}" readonly style="width: 100px;" />
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                <div class=" container">
+                    <div class="table-responsive-sm">
+                        <table class="table table-primary">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Producto</th>
+                                    <th>Precio</th>
+                                    <th>Lectura Inicial</th>
+                                    <th>Lectura Final</th>
+                                    <th>Litros</th>
+                                    <th>Importe</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($turnoDetails as $key => $turnoDetail)
+                                    <tr>
+                                        <input type="hidden" name="surtidor_id[]" value="{{ $key + 1 }}" />
 
-                        <!-- Tabla de Impares -->
-                        <div class="col-md-6">
-                            <div class="table-responsive-sm">
-                                <table class="table table-custom no-margin">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Producto</th>
-                                            <th>Precio</th>
-                                            <th>Lectura Inicial</th>
-                                            <th>Lectura Final</th>
-                                            <th>Litros</th>
-                                            <th>Importe</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($pares as $key => $turnoDetail)
-                                            <tr>
-                                                <input type="hidden" name="surtidor_id[]"
-                                                    value="{{ $key + $mitad + 1 }}" />
-
-                                                <td class="text-center">{{ $key + $mitad + 1 }}</td>
-                                                <td class="text-center">{{ $turnoDetail->surtidor->product->name }}
-                                                </td>
-                                                <td class="text-center">
-                                                    <input type="number"
-                                                        value="{{ $turnoDetail->surtidor->product->price }}" name="price[]"
-                                                        id="price_{{ $key + $mitad + 1 }}" readonly style="width: 80px;" />
-                                                </td>
-                                                <!-- Lectura Inicial -->
-                                                <td class="text-center">
-                                                    <input type="number" value="{{ $turnoDetail->lectura_inicial }}"
-                                                        name="l_inicial_{{ $key + $mitad + 1 }}"
-                                                        id="l_inicial_{{ $key + $mitad + 1 }}" disabled
-                                                        style="width: 100px;" />
-                                                </td>
-                                                <!-- Lectura Actual -->
-                                                <td class="text-center">
-                                                    <input type="number" name="l_final[]"
-                                                        id="l_final_{{ $key + $mitad + 1 }}" step="0.01"
-                                                        value="{{ old('l_final[]', $turnoDetail->lectura_final) }}"
-                                                        onchange="recalculateImporte({{ $key + $mitad + 1 }})"
-                                                        style="width: 120px;" />
-                                                </td>
-                                                <!-- Litros -->
-                                                <td class="text-center">
-                                                    <input type="number" name="litros_{{ $key + $mitad + 1 }}"
-                                                        id="litros_{{ $key + $mitad + 1 }}" step="0.01" value="0.00"
-                                                        disabled style="width: 100px;" />
-                                                </td>
-                                                <!-- Importe -->
-                                                <td class="text-center">
-                                                    <input type="number" id="importe_{{ $key + $mitad + 1 }}"
-                                                        name="importe[]" value="{{ old('importe[]') }}" readonly
-                                                        style="width: 100px;" />
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                    <tfoot>
-                                        <td colspan="5"></td>
-                                        <td>
-                                            <span class="label label-info" id="totallitros">Total Litros:
-                                                {{ $totales['litros'] }}
-                                            </span>
+                                        <td class="text-center">{{ $key + 1 }}</td>
+                                        <td class="text-center">{{ $turnoDetail->surtidor->product->name }}
                                         </td>
-                                        <td>
-                                            <span class="label label-info" id="totalimporte">Total Importe:
-                                                {{ $totales['importe'] }}
-                                            </span>
+                                        <td class="text-center">
+                                            <input type="number" value="{{ $turnoDetail->surtidor->product->price }}"
+                                                name="price[]" id="price_{{ $key + 1 }}" readonly
+                                                style="width: 80px;" />
                                         </td>
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </div>
+                                        <!-- Lectura Inicial -->
+                                        <td class="text-center">
+                                            <input type="number" value="{{ $turnoDetail->lectura_inicial }}"
+                                                name="l_inicial_{{ $key + 1 }}" id="l_inicial_{{ $key + 1 }}"
+                                                disabled style="width: 100px;" />
+                                        </td>
+                                        <!-- Lectura Actual -->
+                                        <td class="text-center">
+                                            <input type="number" name="l_final[]" id="l_final_{{ $key + 1 }}"
+                                                step="0.01" value="{{ old('l_final[]', $turnoDetail->lectura_final) }}"
+                                                onchange="recalculateImporte({{ $key + 1 }})" style="width: 120px;" />
+                                        </td>
+                                        <!-- Litros -->
+                                        <td class="text-center">
+                                            <input type="number" name="litros_{{ $key + 1 }}"
+                                                id="litros_{{ $key + 1 }}" step="0.01" value="0.00" disabled
+                                                style="width: 100px;" />
+                                        </td>
+                                        <!-- Importe -->
+                                        <td class="text-center">
+                                            <input type="number" id="importe_{{ $key + 1 }}" name="importe[]"
+                                                value="{{ old('importe[]') }}" readonly style="width: 100px;" />
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                            <tfoot>
+                                <td colspan="5"></td>
+                                <td>
+                                    <span class="label label-info" id="totallitros">Total Litros:
+                                        {{ $totales['litros'] }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="label label-info" id="totalimporte">Total Importe:
+                                        {{ $totales['importe'] }}
+                                    </span>
+                                </td>
+                            </tfoot>
+                        </table>
                     </div>
                 </div>
                 <div class="form-row ">

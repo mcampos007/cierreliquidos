@@ -143,7 +143,7 @@
             vLitros = l_finalValue - l_inicialValue
             vTotalLitros = vTotalLitros + vLitros
             vImporteTotal = vImporteTotal + vLitros * priceValue;
-            console.log(2, vTotalLitros)
+
 
         }
 
@@ -153,16 +153,27 @@
     }
 
     function recalculateImporte(key) {
-        var l_finalValue = parseFloat(document.getElementById('l_final_' + key).value);
-        var l_inicialValue = parseFloat(document.getElementById('l_inicial_' + key).value);
-        var priceValue = parseFloat(document.getElementById('price_' + key)
+        let l_finalValue = parseFloat(document.getElementById('l_final_' + key).value);
+        let l_inicialValue = parseFloat(document.getElementById('l_inicial_' + key).value);
+        let priceValue = parseFloat(document.getElementById('price_' + key)
             .value); // Asegúrate de tener un elemento con el ID 'price' que contenga el valor de price
 
-        var importe = (l_finalValue - l_inicialValue) *
+        let importe = (l_finalValue - l_inicialValue) *
             priceValue; // Aquí puedes cambiar '0' si deseas restar otro valor
-        var litros = (l_finalValue - l_inicialValue); // Los litros despachados
+        let litros = (l_finalValue - l_inicialValue); // Los litros despachados
 
-        console.log(2, litros)
+        if (litros < 0) {
+            Swal.fire({
+                icon: "error",
+                title: "Revise el valor ingresado...",
+                text: "No se pueden ingresar lecturas inferiores a la actual ",
+
+            });
+            litros = 0
+            importe = 0
+            document.getElementById('l_final_' + key).value = l_inicialValue
+
+        }
 
         document.getElementById('importe_' + key).value = importe.toFixed(2);
         document.getElementById('litros_' + key).value = litros.toFixed(2);
@@ -178,14 +189,16 @@
     <script>
         document.addEventListener("DOMContentLoaded", function(event) {
             // Aquí colocas tu código JavaScript
-            var l_finalValue = parseFloat(document.getElementById('l_final_{{ $key + 1 }}').value);
-            var l_inicialValue = parseFloat(document.getElementById('l_inicial_{{ $key + 1 }}').value);
-            var priceValue = parseFloat(document.getElementById('price_{{ $key + 1 }}')
+            let l_finalValue = parseFloat(document.getElementById('l_final_{{ $key + 1 }}').value);
+            let l_inicialValue = parseFloat(document.getElementById('l_inicial_{{ $key + 1 }}').value);
+            let priceValue = parseFloat(document.getElementById('price_{{ $key + 1 }}')
                 .value); // Asegúrate de tener un elemento con el ID 'price' que contenga el valor de price
 
-            var importe = (l_finalValue - l_inicialValue) *
+            let importe = (l_finalValue - l_inicialValue) *
                 priceValue; // Aquí puedes cambiar '0' si deseas restar otro valor
-            var litros = (l_finalValue - l_inicialValue); // Los litros despachados
+            let litros = (l_finalValue - l_inicialValue); // Los litros despachados
+
+
             document.getElementById('importe_{{ $key + 1 }}').value = importe.toFixed(2);
             document.getElementById('litros_{{ $key + 1 }}').value = litros.toFixed(2)
 

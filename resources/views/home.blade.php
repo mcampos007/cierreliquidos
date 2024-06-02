@@ -55,7 +55,7 @@
                                 @else
                                     <!-- Mostrar los datos registrados actualmente  -->
                                     <span class="label label-info">Usuario {{ auth()->user()->name }}</span>
-                                    <table class="table">
+                                    <table class="table table-responsive-sm">
                                         <thead>
 
                                             <tr>
@@ -145,18 +145,18 @@
                                                 <td class="text-center">{{ $turnoclose->turno }}</td>
                                                 <td class="text-center">{{ $turnoclose->fecha }}</td>
                                                 <td>
-                                                    <a href="{{ url('/user/turno/edit/' . $turnoclose->id) }}" type="button"
-                                                        rel="tooltip" title="Ver Importes"
+                                                    <a href="{{ url('/user/turno/edit/' . $turnoclose->id) }}"
+                                                        type="button" rel="tooltip" title="Ver Importes"
                                                         class="btn btn-success btn-simple btn-xs">
                                                         <span class="material-icons md-dark">paid</span>
                                                     </a>
-                                                    <a href="{{ url('/user/turno/edit/' . $turnoclose->id) }}" type="button"
-                                                        rel="tooltip" title="Ver Aforadores"
+                                                    <a href="{{ url('/user/turno/edit/' . $turnoclose->id) }}"
+                                                        type="button" rel="tooltip" title="Ver Aforadores"
                                                         class="btn btn-success btn-simple btn-xs">
                                                         <span class="material-icons md-dark">format_list_numbered</span>
                                                     </a>
-                                                    <a href="{{ url('/user/turno/edit/' . $turnoclose->id) }}" type="button"
-                                                        rel="tooltip" title="Imprimir Turno"
+                                                    <a href="{{ url('/user/turno/edit/' . $turnoclose->id) }}"
+                                                        type="button" rel="tooltip" title="Imprimir Turno"
                                                         class="btn btn-success btn-simple btn-xs">
                                                         <span class="material-icons md-dark">print</span>
                                                     </a>
