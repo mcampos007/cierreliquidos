@@ -4,10 +4,12 @@
 
 @section('body-class', 'product-page')
 @section('styles')
-    .custom-alert {
-    width: 50%;
-    margin-top:15px;
-    }
+    <style>
+        .custom-alert {
+            width: 50%;
+            margin-top: 15px;
+        }
+    </style>
 @endsection
 
 @section('content')
