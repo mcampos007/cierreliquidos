@@ -53,6 +53,7 @@
                             </div>
                         @endif
                     @endif
+                    {{ $turno }}
                     <div class="tab-content gallery">
                         <!-- Panel de Pedido Activo -->
                         <div class="tab-pane active" id="dashboard">
