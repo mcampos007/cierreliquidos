@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use Carbon\Carbon;
+use PDF;
 
 class TurnoController extends Controller
 {
@@ -46,6 +47,7 @@ class TurnoController extends Controller
     public function detallesdelturno($id)
     {
         $surtidores = Surtidor::all();
+
         if ($id>0){
             $turno_Details = TurnoDetail::where('turno_id',$id)->get();
             if (count($turno_Details) == 0)
@@ -68,6 +70,7 @@ class TurnoController extends Controller
             }
 
         }else{
+
             $turno_Details = [];
             foreach($surtidores as $surtidor){
                 $turnoDetail = new TurnoDetail();
@@ -234,6 +237,7 @@ class TurnoController extends Controller
 
             $turnoDetails = $this->detallesdelturno(NULL);
 
+
             $totales = array(
                 'litros' => 0,
                 'importe' => 0,
@@ -283,8 +287,10 @@ class TurnoController extends Controller
 
 
     public function actualizar_lectura_surtidor($id, $lectura){
+
         $surtidor = Surtidor::find($id);
         $surtidor->lectura_actual = $lectura;
+
         $surtidor->save();
     }
 
@@ -362,11 +368,38 @@ class TurnoController extends Controller
 
     public function confirmarcierreturno(Request $request){
         $turno = Turno::findOrFail($request->input('id'));
+        //$turno = Turno::findOrFail($request->input('id'));
         $turno->status = True;
+        $id = $turno->id;
+        // Actualizar la lectura del surtidor
+        //$detalle = TurnoDetail::where('turno_id', $id)->get();
+        $detalles = $turno->turnoDetails;
+        foreach ($detalles as $detalle) {
+
+            $this->actualizar_lectura_surtidor($detalle->surtidor_id, $detalle->lectura_final);
+        }
         $turno->save();
         $notification = "El turno se ha cerrado Satisfactoriamente!!";
-        return redirect('home')->with(compact('notification'));
+
+
+        $url = '/user/turno/cierres/pdf/'.$id;
+        //return redirect('home')->with(compact('notification'));
+
+        return redirect($url)->with(compact('id'));
     }
 
+    public function cierreAforadoresPDF($id)
+    {
+
+        $detalles = turnoDetail::where('turno_id', $id)->get();//   Data::all(); // Reemplaza con la consulta que necesites
+        $turno = turno::find($id);//   Data::all(); // Reemplaza con la consulta que necesites
+
+        $pdf = PDF::loadView('user.pdfCierres', compact('turno', 'detalles'));
+
+        //$pdf->download('reporte.pdf');
+        return $pdf->stream('reporte.pdf');
+
+        return redirect('/home');
+    }
 
 }

@@ -169,6 +169,18 @@
         var importe = (l_finalValue - l_inicialValue) *
             priceValue; // Aquí puedes cambiar '0' si deseas restar otro valor
         var litros = (l_finalValue - l_inicialValue); // Los litros despachados
+        if (litros < 0) {
+            Swal.fire({
+                icon: "error",
+                title: "Revise el valor ingresado...",
+                text: "No se pueden ingresar lecturas inferiores a la actual ",
+
+            });
+            litros = 0
+            importe = 0
+            document.getElementById('l_final_' + key).value = l_inicialValue
+
+        }
 
         document.getElementById('importe_' + key).value = importe.toFixed(2);
         document.getElementById('litros_' + key).value = litros.toFixed(2);

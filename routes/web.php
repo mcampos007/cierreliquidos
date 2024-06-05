@@ -27,6 +27,8 @@ Route::middleware(['auth', 'user'])->prefix('user')->namespace('User')->group(fu
 	Route::get('/turno/edit/{id}', 'TurnoController@editarturno');					//Editar Turno
 	Route::get('/turno/cerrarturno/{id}', 'TurnoController@cerrarturno');			//Llamada al form para Cerrar Turno
 	Route::post('/turno/cerrarturno', 'TurnoController@confirmarcierreturno');		//Confirmar cierre de turno
+    Route::get('/turno/cierres/pdf/{id}', 'TurnoController@cierreAforadoresPDF');   //Generar pdf
+
 });
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->namespace('Admin')->group(function () {
@@ -42,10 +44,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->namespace('Admin')->group
 	Route::put('/surtidors/update/{id}', "SurtidorController@update");	//Update Surtidor
 
 	//Route::get('/turnonuevo','TurnoController@turnonuevo'); 						//crear un turno nuevo
-	
+
 	//Route::post('/turnonuevo','TurnoController@crearturno');						//Crear un turno nuevo
 	//Route::post('/aforadores', 'TurnoController@storeaforadores'); 					//Registrar los aforadores
-	//Route::get('/turno/edit/{id}', 'TurnoController@editarturno');					//Editar Turno
+	Route::get('/turno/edit/{id}', 'TurnoController@editarturno');					//Editar Turno
 	//Route::get('/turno/cerrarturno/{id}', 'TurnoController@cerrarturno');			//Llamada al form para Cerrar Turno
 	//Route::post('/turno/cerrarturno', 'TurnoController@confirmarcierreturno');		//Confirmar cierre de turno
 });
