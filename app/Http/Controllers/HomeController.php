@@ -42,6 +42,6 @@ class HomeController extends Controller {
             $nuevo = true;
         }
 
-        return view( 'home' )->with( compact( 'turno', 'nuevo', 'turnoscerrados', 'notification' ) );
+        return view( 'home', compact( 'turno', 'turnoscerrados' ) )->with( 'nuevo' )->with( 'notification' ) ;
     }
 }
