@@ -65,8 +65,7 @@
                                         turno</a>
                                 @else
                                     <!-- Mostrar los datos registrados actualmente  -->
-                                    {{ $turno->user_id }}
-                                    {{ auth()->user()->id }}
+
                                     <span class="label label-info">Usuario {{ auth()->user()->name }}</span>
                                     <table class="table table-responsive-sm">
                                         <thead>
@@ -90,6 +89,8 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($turno as $t)
+                                                {{ $t->user_id }}
+                                                {{ auth()->user()->id }}
                                                 @if ($t->user_id === auth()->user()->id)
                                                     <td>{{ $t->id }}</td>
                                                     <td>{{ $t->turno }}</td>
