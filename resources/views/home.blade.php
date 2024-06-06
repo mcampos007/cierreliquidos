@@ -88,6 +88,7 @@
                                         </thead>
                                         <tbody>
                                             {{ $turno->first() }}
+                                            {{ auth()->user()->id }}
                                             @if ($turno->first()->user_id === auth()->user()->id)
                                                 <td>{{ $turno->first()->id }}</td>
                                                 <td>{{ $turno->first()->turno }}</td>
