@@ -65,9 +65,6 @@
                                         turno</a>
                                 @else
                                     <!-- Mostrar los datos registrados actualmente  -->
-                                    {{ auth()->user()->id }}
-                                    {{ $turno->user_id }}
-
                                     <span class="label label-info">Usuario {{ auth()->user()->name }}</span>
                                     <table class="table table-responsive-sm">
                                         <thead>
@@ -90,52 +87,50 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($turno as $t)
-                                                @if ($t->user_id === auth()->user()->id)
-                                                    <td>{{ $t->id }}</td>
-                                                    <td>{{ $t->turno }}</td>
-                                                    <td>{{ $t->fecha }}</td>
-                                                    <td>{{ $t->user->name }}</td>
-                                                    <td>{{ $t->efectivo }}</td>
-                                                    <td>{{ $t->ctacte }}</td>
-                                                    <td>{{ $t->visa }}</td>
-                                                    <td>{{ $t->electron }}</td>
-                                                    <td>{{ $t->maestro }} </td>
-                                                    <td>{{ $t->mastercard }}</td>
-                                                    <td>{{ $t->american }}</td>
-                                                    <td>{{ $t->cheques }}</td>
-                                                    <td>{{ $t->otros }}</td>
-                                                    <td>
-                                                        <form method="post" action="{{ url('/user/turno/' . $t->id) }}">
-                                                            {{ csrf_field() }}
-                                                            {{ method_field('DELETE') }}
-                                                            <input type="hidden" name="id"
-                                                                value="{{ $t->id }}" />
-                                                            <a href="{{ url('/user/turno/edit/' . $t->id) }}"
-                                                                type="button" rel="tooltip" title="Editar Importes"
-                                                                class="btn btn-success btn-simple btn-xs">
-                                                                <span class="material-icons md-dark">paid</span>
-                                                            </a>
-                                                            <a href=" {{ url('/user/turno/editaforadores/' . $t->id . '/edit') }}"
-                                                                type="button" rel="tooltip" title="Editar Aforadores"
-                                                                class="btn btn-success btn-simple btn-xs">
-                                                                <span
-                                                                    class="material-icons md-dark">format_list_numbered</span>
-                                                            </a>
-                                                            <a href=" {{ url('/user/turno/cerrarturno/' . $t->id) }}"
-                                                                type="button" rel="tooltip" title="Cerrar Turno"
-                                                                class="btn btn-success btn-simple btn-xs">
-                                                                <span class="material-icons md-dark">thumb_up</span>
 
-                                                            </a>
-                                                            <button type="submit" rel="tooltip" title="Eliminar"
-                                                                class="btn btn-danger btn-simple btn-xs">
-                                                                <i class="fa fa-times"></i>
-                                                            </button>
-                                                        </form>
-                                                    </td>
-                                                @endif
-                                            @endforeach
+                                            @if ($turno->first()->user_id === auth()->user()->id)
+                                                <td>{{ $turno->first()->id }}</td>
+                                                <td>{{ $turno->first()->turno }}</td>
+                                                <td>{{ $turno->first()->fecha }}</td>
+                                                <td>{{ $turno->first()->user->name }}</td>
+                                                <td>{{ $turno->first()->efectivo }}</td>
+                                                <td>{{ $turno->first()->ctacte }}</td>
+                                                <td>{{ $turno->first()->visa }}</td>
+                                                <td>{{ $turno->first()->electron }}</td>
+                                                <td>{{ $turno->first()->maestro }} </td>
+                                                <td>{{ $turno->first()->mastercard }}</td>
+                                                <td>{{ $turno->first()->american }}</td>
+                                                <td>{{ $turno->first()->cheques }}</td>
+                                                <td>{{ $turno->first()->otros }}</td>
+                                                <td>
+                                                    <form method="post" action="{{ url('/user/turno/' . $t->id) }}">
+                                                        {{ csrf_field() }}
+                                                        {{ method_field('DELETE') }}
+                                                        <input type="hidden" name="id" value="{{ $t->id }}" />
+                                                        <a href="{{ url('/user/turno/edit/' . $t->id) }}" type="button"
+                                                            rel="tooltip" title="Editar Importes"
+                                                            class="btn btn-success btn-simple btn-xs">
+                                                            <span class="material-icons md-dark">paid</span>
+                                                        </a>
+                                                        <a href=" {{ url('/user/turno/editaforadores/' . $t->id . '/edit') }}"
+                                                            type="button" rel="tooltip" title="Editar Aforadores"
+                                                            class="btn btn-success btn-simple btn-xs">
+                                                            <span class="material-icons md-dark">format_list_numbered</span>
+                                                        </a>
+                                                        <a href=" {{ url('/user/turno/cerrarturno/' . $t->id) }}"
+                                                            type="button" rel="tooltip" title="Cerrar Turno"
+                                                            class="btn btn-success btn-simple btn-xs">
+                                                            <span class="material-icons md-dark">thumb_up</span>
+
+                                                        </a>
+                                                        <button type="submit" rel="tooltip" title="Eliminar"
+                                                            class="btn btn-danger btn-simple btn-xs">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            @endif
+
                                         </tbody>
                                     </table>
                                     <p class="h2"> <strong> </strong> </p>
