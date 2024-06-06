@@ -141,7 +141,7 @@
                             @endif
                         </div>
                         <!-- Panel de Turnos Cerrados -->
-                        {{ $turnoscerrador }}
+                        {{ $turnoscerrados }}
                         <div class="tab-pane text-center" id="remitos">
 
                             <hr>
