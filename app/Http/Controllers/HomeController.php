@@ -33,15 +33,8 @@ class HomeController extends Controller {
 
         }
 
-        if ( count( $turno )>0 ) {
-            // llamar a edición de turno pendiente
+        $nuevo = count( $turno ) === 0;
 
-            $nuevo = false;
-        } else {
-            // llamar a nuevo turno
-            $nuevo = true;
-        }
-
-        return view( 'home', compact( 'turno', 'turnoscerrados' ) )->with( 'nuevo' )->with( 'notification' ) ;
+        return view( 'home', compact( 'turno', 'turnoscerrados', 'nuevo', 'notification' ) ) ;
     }
 }

@@ -396,8 +396,16 @@ class TurnoController extends Controller
 
         $pdf = PDF::loadView('user.pdfCierres', compact('turno', 'detalles'));
 
+        // Guarda el PDF temporalmente en el servidor
+        $rptname = 'app/public/cierres/turno_'.$id.'.pdf';
+        $pdfPath = storage_path($rptname);
+        $pdf->save($pdfPath);
+
+    // Devuelve la URL del PDF en la respuesta
+    //    return response()->json(['pdf_url' => asset('storage/reporte.pdf')]);
+
         //$pdf->download('reporte.pdf');
-        return $pdf->stream('reporte.pdf');
+        // return $pdf->stream('reporte.pdf');
 
         return redirect('/home');
     }
