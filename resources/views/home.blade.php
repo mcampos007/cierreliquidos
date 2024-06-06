@@ -65,6 +65,7 @@
                                         turno</a>
                                 @else
                                     <!-- Mostrar los datos registrados actualmente  -->
+                                    {{ $turno }}
                                     <span class="label label-info">Usuario {{ auth()->user()->name }}</span>
                                     <table class="table table-responsive-sm">
                                         <thead>
@@ -140,6 +141,7 @@
                             @endif
                         </div>
                         <!-- Panel de Turnos Cerrados -->
+                        {{ $turnoscerrador }}
                         <div class="tab-pane text-center" id="remitos">
 
                             <hr>
