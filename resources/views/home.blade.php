@@ -87,7 +87,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-
+                                            {{ $turno->first() }}
                                             @if ($turno->first()->user_id === auth()->user()->id)
                                                 <td>{{ $turno->first()->id }}</td>
                                                 <td>{{ $turno->first()->turno }}</td>
