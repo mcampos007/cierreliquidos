@@ -65,7 +65,8 @@
                                         turno</a>
                                 @else
                                     <!-- Mostrar los datos registrados actualmente  -->
-                                    {{ $turno }}
+                                    {{ $turno->user_id }}
+                                    {{ auth()->user()->id }}
                                     <span class="label label-info">Usuario {{ auth()->user()->name }}</span>
                                     <table class="table table-responsive-sm">
                                         <thead>
