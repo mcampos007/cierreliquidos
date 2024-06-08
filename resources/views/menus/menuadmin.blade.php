@@ -1,21 +1,23 @@
 <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true"
+        v-pre>
         {{ Auth::user()->name }} <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
         <li>
-            <a href="{{ url('/home')}}">Registrar Nuevo Turno</a>
+            <a href="{{ url('/home') }}">Registrar Nuevo Turno</a>
         </li>
         <li>
-            <a href="{{ url('/admin/products')}}">Gestionar Productos</a>
+            <a href="{{ url('/admin/products') }}">Gestionar Productos</a>
         </li>
         <li>
-            <a href="{{ url('/admin/surtidors')}}">Gestionar Surtidores</a>
+            <a href="{{ url('/admin/surtidors') }}">Gestionar Surtidores</a>
         </li>
-        {{-- 
+
         <li>
-            <a href="{{ url('/admin/categories')}}">Gestionar Categorias</a>
+            <a href="{{ url('/admin/user') }}">Gestionar Usuarios</a>
         </li>
+        {{--
         <li>
             <a href="{{ url('/admin/clients')}}">Gestionar Clientes</a>
         </li>
@@ -32,9 +34,9 @@
                          document.getElementById('logout-form').submit();">
                 Desconectarse
             </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    {{ csrf_field() }}
-                </form>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                {{ csrf_field() }}
+            </form>
         </li>
     </ul>
 </li>
@@ -43,9 +45,9 @@
         Cajas <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
-        
+
         <li>
-            <a href="{{ url('/usuario/cajas')}}">Cajas</a>
+            <a href="{{ url('/usuario/cajas') }}">Cajas</a>
         </li>
         <li>
             <a href="{{ url('/usuario/cajascerradas') }}">Cerradas</a>
@@ -54,11 +56,11 @@
             <a href="{{ url('/usuario/controladmcaja') }}">Control Administrativo</a>
         </li>
         <li>
-            <a href="{{ url('/usuario/autitarcajas')}}">Auditoria</a>
+            <a href="{{ url('/usuario/autitarcajas') }}">Auditoria</a>
         </li>
         <li>
-            <a href="{{ url('/usuario/reportescajas')}}">Reportes</a>
-        </li>     
-        
+            <a href="{{ url('/usuario/reportescajas') }}">Reportes</a>
+        </li>
+
     </ul>
 </li> -->

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Bienvenido a Cierre de Turnos Panel de Control')
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @section('body-class', 'product-page')
 @section('styles')
     <style>
@@ -162,21 +162,21 @@
                                             <td class="text-center">{{ $turnoclose->turno }}</td>
                                             <td class="text-center">{{ $turnoclose->fecha }}</td>
                                             <td>
-                                                <a href="{{ url('/admin/turno/edit/' . $turnoclose->id) }}" type="button"
+                                                <a href="{{ url('/user/turno/edit/' . $turnoclose->id) }}" type="button"
                                                     rel="tooltip" title="Ver Importes"
                                                     class="btn btn-success btn-simple btn-xs">
                                                     <span class="material-icons md-dark">paid</span>
                                                 </a>
-                                                <a href="{{ url('/user/turno/edit/' . $turnoclose->id) }}" type="button"
-                                                    rel="tooltip" title="Ver Aforadores"
+                                                <a href=" {{ url('/user/turno/editaforadores/' . $turnoclose->id . '/edit') }}"
+                                                    type="button" rel="tooltip" title="Ver Aforadores"
                                                     class="btn btn-success btn-simple btn-xs">
                                                     <span class="material-icons md-dark">format_list_numbered</span>
                                                 </a>
-                                                <a href="{{ url('/user/turno/edit/' . $turnoclose->id) }}" type="button"
-                                                    rel="tooltip" title="Imprimir Turno"
-                                                    class="btn btn-success btn-simple btn-xs">
-                                                    <span class="material-icons md-dark">print</span>
-                                                </a>
+                                                <button id="open-pdf" data-id={{ $turnoclose->id }}
+                                                    class="btn btn-success btn-simple btn-xs" rel="tooltip"
+                                                    title="Imprimir Turno"> <span
+                                                        class="material-icons md-dark">print</span></button>
+
                                             </td>
                                         </tr>
                                     @endforeach
@@ -195,4 +195,23 @@
     </div>
 
     @include('includes.footer')
+@endsection
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#open-pdf').on('click', function() {
+                var turnoId = $(this).data('id'); // Obtener el ID del turno
+                var url = '/user/turno/cierres/pdf/' + turnoId;
+
+                // Abrir el PDF en una nueva ventana
+                var printWindow = window.open(url, '_blank');
+
+                // Después de un tiempo (por ejemplo, 5 segundos), redirigir o cerrar la ventana
+                setTimeout(function() {
+                    printWindow.close(); // Cerrar la ventana
+                    window.location.href = '/home'; // Redirigir a la página de inicio
+                }, 10000); // Tiempo en milisegundos
+            });
+        });
+    </script>
 @endsection

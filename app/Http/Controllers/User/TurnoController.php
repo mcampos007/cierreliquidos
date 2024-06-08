@@ -163,14 +163,24 @@ class TurnoController extends Controller
 
     //Edit Aforadores
     public function editaforadores($id){
+        // Obtener el turno y validar su existencia
         $turno = Turno::find($id);
-        $turnoDetails = $turno->turnoDetails;
-        $totales = array(
-                'litros' => number_format($this->total_litros($turno->id),2),
-                'importe' => number_format($this->importe_total($turno->id),2),
-            );
         $notification = "";
-        return view('user.editaforadores')->with(compact('turno','totales','turnoDetails','notification'));
+
+        if (!$turno) {
+            $notification = "No existen aforadores a visualizar para el turno";
+        } elseif ($turno->status) {
+            $notification = "El turno se encuentra cerrado!!";
+        }
+
+        // Obtener los detalles del turno y calcular los totales solo si el turno existe
+        $turnoDetails = $turno ? $turno->turnoDetails : collect();
+        $totales = [
+            'litros' => $turno ? number_format($this->total_litros($turno->id), 2) : '0.00',
+            'importe' => $turno ? number_format($this->importe_total($turno->id), 2) : '0.00',
+        ];
+
+        return view('user.editaforadores',compact('turno','totales','turnoDetails','notification'));
     }
 
     // Crear Turno o actualizar el turno existente
@@ -276,7 +286,20 @@ class TurnoController extends Controller
     public function editarturno($id){
         // Editar el Turno
         $turno = Turno::find($id);
-        return view('user.turnoedit')->with(compact('turno'));
+        $notification = null;
+        if (!$turno){
+            $notification ="No existe un para visualizar !!";
+            return view('user.turnoedit')->with(compact('turno', 'notification'));
+        }
+
+        if ($turno->status){
+            $notification ="El turno ya se encuentra cerrado!!";
+
+            return view('user.turnoedit')->with(compact('turno', 'notification'));
+        }
+
+        return view('user.turnoedit')->with(compact('turno', 'notification'));
+
     }
 
     public function lectura_actual_surtidor($id){
@@ -399,10 +422,10 @@ class TurnoController extends Controller
         // Guarda el PDF temporalmente en el servidor
         $rptname = 'app/public/cierres/turno_'.$id.'.pdf';
         $pdfPath = storage_path($rptname);
-        $pdf->save($pdfPath);
+        //$pdf->save($pdfPath);
+        return $pdf->stream('reporte.pdf');
 
-    // Devuelve la URL del PDF en la respuesta
-    //    return response()->json(['pdf_url' => asset('storage/reporte.pdf')]);
+
 
         //$pdf->download('reporte.pdf');
         // return $pdf->stream('reporte.pdf');

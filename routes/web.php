@@ -28,6 +28,7 @@ Route::middleware(['auth', 'user'])->prefix('user')->namespace('User')->group(fu
 	Route::get('/turno/cerrarturno/{id}', 'TurnoController@cerrarturno');			//Llamada al form para Cerrar Turno
 	Route::post('/turno/cerrarturno', 'TurnoController@confirmarcierreturno');		//Confirmar cierre de turno
     Route::get('/turno/cierres/pdf/{id}', 'TurnoController@cierreAforadoresPDF');   //Generar pdf
+    Route::get('/turno/cierres/imprimir/{id}', 'TurnoController@imprimircierre');   //Generar pdf
 
 });
 
@@ -50,4 +51,5 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->namespace('Admin')->group
 	Route::get('/turno/edit/{id}', 'TurnoController@editarturno');					//Editar Turno
 	//Route::get('/turno/cerrarturno/{id}', 'TurnoController@cerrarturno');			//Llamada al form para Cerrar Turno
 	//Route::post('/turno/cerrarturno', 'TurnoController@confirmarcierreturno');		//Confirmar cierre de turno
+    Route::resource('/user', 'UserController');
 });

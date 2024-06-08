@@ -26,7 +26,7 @@
                 @endif
                 @if ($notification)
                     <div class="alert alert-danger">
-                        $notification;
+                        {{ $notification }}
                     </div>
                 @endif
                 @if (auth()->user()->role == 'user')
@@ -74,7 +74,7 @@
                                                 <input type="number" name="l_final[]" id="l_final_{{ $key + 1 }}"
                                                     step="0.01" value= "{{ old('l_final[]', $Detail->lectura_final) }}"
                                                     onchange="recalculateImporte({{ $key + 1 }}) "
-                                                    style="width: 120px;" />
+                                                    style="width: 120px;" {{ $turno->status ? 'disabled' : '' }} />
                                             </td>
                                             <!-- Litros -->
                                             <td class="text-center">
@@ -109,7 +109,8 @@
 
                         <div class="form-row ">
                             <div class="col-md-6">
-                                <button type="submit" class="btn btn-primary">Actualizar Aforadores</button>
+                                <button type="submit" class="btn btn-primary"
+                                    {{ $turno->status ? 'disabled' : '' }}>Actualizar Aforadores</button>
                                 <a href="{{ url('/home') }}" class="btn btn-default">Cancelar</a>
                             </div>
 
