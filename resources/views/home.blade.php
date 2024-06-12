@@ -49,7 +49,7 @@
                     @else
                         @if (session('notification'))
                             <div class="alert alert-danger custom-alert" role="alert">
-                                <strong>{{ $notification }}</strong>
+                                <strong>{{ session('notification') }}</strong>
                             </div>
                         @endif
                     @endif

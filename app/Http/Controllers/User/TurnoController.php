@@ -405,10 +405,10 @@ class TurnoController extends Controller
         $notification = "El turno se ha cerrado Satisfactoriamente!!";
 
 
-        $url = '/user/turno/cierres/pdf/'.$id;
-        //return redirect('home')->with(compact('notification'));
+        //$url = '/user/turno/cierres/pdf/'.$id;
+        return redirect('home')->with(compact('notification'));
 
-        return redirect($url)->with(compact('id'));
+        //return redirect($url)->with(compact('id'));
     }
 
     public function cierreAforadoresPDF($id)

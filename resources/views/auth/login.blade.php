@@ -15,16 +15,16 @@
                                 <h4>Inicio de Sesión</h4>
                                 <div class="social-line">
                                     <!--
-                                    <a href="#" class="btn btn-simple btn-just-icon">
-                                        <i class="fa fa-facebook-square"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-simple btn-just-icon">
-                                        <i class="fa fa-twitter"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-simple btn-just-icon">
-                                        <i class="fa fa-google-plus"></i>
-                                    </a>
-                                -->
+                                                            <a href="#" class="btn btn-simple btn-just-icon">
+                                                                <i class="fa fa-facebook-square"></i>
+                                                            </a>
+                                                            <a href="#" class="btn btn-simple btn-just-icon">
+                                                                <i class="fa fa-twitter"></i>
+                                                            </a>
+                                                            <a href="#" class="btn btn-simple btn-just-icon">
+                                                                <i class="fa fa-google-plus"></i>
+                                                            </a>
+                                                        -->
                                 </div>
                             </div>
                             <p class="text-divider">Ingresa tus datos</p>
@@ -55,10 +55,10 @@
                                 </div>
                             </div>
                             <div class="footer text-center">
-                                <button type="submit" class="btn btn-simple btn-primary btn-lg"> Ingresar </a>
-                                    <!--  <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        Forgot Your Password?
-                                </a> -->
+                                <button type="submit" class="btn btn-simple btn-primary btn-lg"> Ingresar </button>
+                                <a class="btn btn-simple btn-danger btn-lg" href="{{ route('password.request') }}">
+                                    Olvidaste tu clave?
+                                </a>
                             </div>
                         </form>
                     </div>

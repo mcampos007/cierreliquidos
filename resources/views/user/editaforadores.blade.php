@@ -14,7 +14,8 @@
         <div class="container">
 
             <div class="section ">
-                <h2 class="title text-center">Actualizar Aforadores</h2>
+                <h2 class="title text-center">Actualizar Aforadores - Turno: {{ $turno->turno }} - Fecha: {{ $turno->fecha }}
+                </h2>
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
