@@ -34,15 +34,20 @@ Route::middleware(['auth', 'user'])->prefix('user')->namespace('User')->group(fu
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->namespace('Admin')->group(function () {
 	//Productos
-	Route::get('/products','ProductController@index');				//LIsta de Productos
-	Route::get('/products/create','ProductController@create');		//LIsta de Productos
-	Route::post('/products','ProductController@store');				//Registrar alta del Producto
-	Route::put('/products/{id}', 'ProductController@update');		//Actualizar datos del producto
-	Route::get('/products/{id}/edit','ProductController@edit'); 	//Editar aforadores
+	Route::get('/products','ProductController@index')->name('admin.products');				            //LIsta de Productos
+	Route::get('/products/create','ProductController@create')->name('admin.product.create');	        //LIsta de Productos
+	Route::post('/products','ProductController@store')->name('admin.product.store');			        //Registrar alta del Producto
+	Route::put('/products/{id}', 'ProductController@update');		                                    //Actualizar datos del producto
+	Route::get('/products/{id}/edit','ProductController@edit'); 	                                    //Editar productos
+    Route::delete('/products/{id}/delete', 'productController@delete')->name('admin.product.delete');   //vproducto para eliminar
+
 	//Surtidores
-	Route::get('/surtidors','SurtidorController@index');			//LIsta de Surtidores
-	Route::get('/surtidors/{id}/edit', "SurtidorController@edit");	//Edita Surtidor
-	Route::put('/surtidors/update/{id}', "SurtidorController@update");	//Update Surtidor
+	Route::get('/surtidors','SurtidorController@index')->name('admin.surtidors');           			    //LIsta de Surtidores
+    Route::get('/surtidors/create', 'SurtidorController@create')->name('admin.surtidors.create');           //vista creacion de surtidor
+    Route::post('/surtidors', 'SurtidorController@store')->name('admin.surtidors.store');              //Registrar surtidor en la BD
+	Route::get('/surtidors/{id}/edit', "SurtidorController@edit")->name('admin.surtidors.edit');    	    //Edita Surtidor
+	Route::put('/surtidors/update/{id}', "SurtidorController@update")->name('admin.surtidors.update');	    //Update Surtidor
+    Route::delete('/surtidors/{id}/delete', "SurtidorController@delete")->name('admin.surtidors.delete');   //Delete surtidor
 
 	//Route::get('/turnonuevo','TurnoController@turnonuevo'); 						//crear un turno nuevo
 
@@ -52,4 +57,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->namespace('Admin')->group
 	//Route::get('/turno/cerrarturno/{id}', 'TurnoController@cerrarturno');			//Llamada al form para Cerrar Turno
 	//Route::post('/turno/cerrarturno', 'TurnoController@confirmarcierreturno');		//Confirmar cierre de turno
     Route::resource('/user', 'UserController');
+
+    Route::get('/page-expired', function () {
+        return view('exceptions/errors419');
+    })->name('custom-419-page');
 });

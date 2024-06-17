@@ -12,13 +12,23 @@
     <div class="main main-raised">
         <div class="container">
             <div class="section text-center">
-                <h2 class="title">Detalles del Surtidor {{ $surtidor->name }}</h2>
+                <h2 class="title">Datos para el Nuevo surtidor </h2>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <div class="card-body">
                     @if (session('notification'))
                         <div class="alert alert-success" role="alert">
                             {{ session('notification') }}
                         </div>
                     @endif
+
 
                 </div>
 
@@ -30,10 +40,10 @@
                     @endif
 
                     <div class="container">
-                        <h1>Actualizar Surtidor</h1>
-                        <form method="POST" action="{{ route('admin.surtidors.update', ['id' => $surtidor->id]) }}">
+                        <h1>Datos del Surtidor</h1>
+                        <form method="POST" action="{{ route('admin.surtidors') }}">
                             @csrf
-                            @method('PUT')
+
 
                             <div class="form-group">
                                 <label for="name">Nombre:</label>
@@ -43,10 +53,9 @@
 
                             <div class="form-group">
                                 <label for="producto">Producto:</label>
-                                <select name="producto" id="producto" class="form-control">
+                                <select name="product_id" id="producto" class="form-control">
                                     @foreach ($products as $product)
-                                        <option value="{{ $product->id }}"
-                                            {{ $surtidor->product->id === $product->id ? 'selected' : '' }}>
+                                        <option value="{{ $product->id }}">
                                             {{ $product->name }}
                                         </option>
                                     @endforeach
@@ -61,7 +70,7 @@
 
                             <!-- Agrega más campos aquí según tus necesidades -->
 
-                            <button type="submit" class="btn btn-primary">Actualizar</button>
+                            <button type="submit" class="btn btn-primary">Crear</button>
                         </form>
                     </div>
                 </div>

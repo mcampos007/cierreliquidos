@@ -35,7 +35,7 @@
                     @endif
                     <div class="row ">
                         @if (auth()->user()->role == 'admin')
-                            <a href="{{ url('/admin/user/create') }}" class="btn btn-primary btn-round">
+                            <a href="{{ route('user.create') }}" class="btn btn-primary btn-round">
                             @else
                                 <a href="#" class="btn btn-primary btn-round">
                         @endif

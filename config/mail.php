@@ -11,12 +11,12 @@ return [
     | sending of e-mail. You may specify which one you're using throughout
     | your application here. By default, Laravel is setup for SMTP mail.
     |
-    | Supported: "smtp", "sendmail", "mailgun", "mandrill", "ses",
-    |            "sparkpost", "postmark", "log", "array"
+    | Supported: 'smtp', 'sendmail', 'mailgun', 'mandrill', 'ses',
+    |            'sparkpost', 'postmark', 'log', 'array'
     |
     */
 
-    'driver' => env('MAIL_DRIVER', 'smtp'),
+    'driver' => env( 'MAIL_DRIVER', 'smtp' ),
 
     /*
     |--------------------------------------------------------------------------
@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+    'host' => env( 'MAIL_HOST', 'smtp.mailgun.org' ),
 
     /*
     |--------------------------------------------------------------------------
@@ -42,11 +42,11 @@ return [
     |
     */
 
-    'port' => env('MAIL_PORT', 587),
+    'port' => env( 'MAIL_PORT', 587 ),
 
     /*
     |--------------------------------------------------------------------------
-    | Global "From" Address
+    | Global 'From' Address
     |--------------------------------------------------------------------------
     |
     | You may wish for all e-mails sent by your application to be sent from
@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env( 'MAIL_FROM_ADDRESS', 'hello@example.com' ),
+        'name' => env( 'MAIL_FROM_NAME', 'Example' ),
     ],
 
     /*
@@ -71,7 +71,7 @@ return [
     |
     */
 
-    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+    'encryption' => env( 'MAIL_ENCRYPTION', 'tls' ),
 
     /*
     |--------------------------------------------------------------------------
@@ -80,20 +80,20 @@ return [
     |
     | If your SMTP server requires a username for authentication, you should
     | set it here. This will get used to authenticate with your server on
-    | connection. You may also set the "password" value below this one.
+    | connection. You may also set the 'password' value below this one.
     |
     */
 
-    'username' => env('MAIL_USERNAME'),
+    'username' => env( 'MAIL_USERNAME' ),
 
-    'password' => env('MAIL_PASSWORD'),
+    'password' => env( 'MAIL_PASSWORD' ),
 
     /*
     |--------------------------------------------------------------------------
     | Sendmail System Path
     |--------------------------------------------------------------------------
     |
-    | When using the "sendmail" driver to send e-mails, we will need to know
+    | When using the 'sendmail' driver to send e-mails, we will need to know
     | the path to where Sendmail lives on this server. A default path has
     | been provided here, which will work well on most of your systems.
     |
@@ -116,7 +116,7 @@ return [
         'theme' => 'default',
 
         'paths' => [
-            resource_path('views/vendor/mail'),
+            resource_path( 'views/vendor/mail' ),
         ],
     ],
 
@@ -125,12 +125,12 @@ return [
     | Log Channel
     |--------------------------------------------------------------------------
     |
-    | If you are using the "log" driver, you may specify the logging channel
+    | If you are using the 'log' driver, you may specify the logging channel
     | if you prefer to keep mail messages separate from other log entries
     | for simpler reading. Otherwise, the default channel will be used.
     |
     */
 
-    'log_channel' => env('MAIL_LOG_CHANNEL'),
+    'log_channel' => env( 'MAIL_LOG_CHANNEL' ),
 
 ];

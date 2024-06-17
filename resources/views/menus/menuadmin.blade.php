@@ -4,14 +4,14 @@
         {{ Auth::user()->name }} <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
-        <li>
+        {{-- <li>
             <a href="{{ url('/home') }}">Registrar Nuevo Turno</a>
+        </li> --}}
+        <li>
+            <a href="{{ route('admin.product.create') }}">Gestionar Productos</a>
         </li>
         <li>
-            <a href="{{ url('/admin/products') }}">Gestionar Productos</a>
-        </li>
-        <li>
-            <a href="{{ url('/admin/surtidors') }}">Gestionar Surtidores</a>
+            <a href="{{ route('admin.surtidors') }}">Gestionar Surtidores</a>
         </li>
 
         <li>

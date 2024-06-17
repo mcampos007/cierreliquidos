@@ -12,7 +12,7 @@
 
                         @if (session('status'))
                             <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
+                                <p>¡Le hemos enviado por correo electrónico el enlace para restablecer su contraseña!</p>
                             </div>
                         @endif
                         <form method="POST" action="{{ route('password.email') }}">
@@ -29,7 +29,8 @@
                                         name="email" value="{{ old('email') }}" required autofocus>
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                            <strong>No podemos encontrar un usuario con esa dirección de correo
+                                                electrónico.</strong>
                                         </span>
                                     @enderror
                                 </div>

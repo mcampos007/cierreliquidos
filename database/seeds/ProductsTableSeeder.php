@@ -2,34 +2,33 @@
 
 use Illuminate\Database\Seeder;
 
-class ProductsTableSeeder extends Seeder
-{
+class ProductsTableSeeder extends Seeder {
     /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
-    {
+    * Run the database seeds.
+    *
+    * @return void
+    */
+
+    public function run() {
         //
-        DB::table('products')->insert([
+        DB::table( 'products' )->insert( [
             [
                 'name' => 'Nafta Infinia',
-                'price' => 352.9,
+                'price' => 1216,
             ],
             [
                 'name' => 'Nafta Super',
-                'price' => 284.1,  
+                'price' => 1010,
             ],
             [
                 'name' => 'Infinia diesel',
-                'price' => 390.3,
+                'price' => 1277,
             ],
             [
                 'name' => 'D 500',
-                'price' => 304.1,  
+                'price' => 1079,
             ],
             // Agrega más registros si lo deseas
-        ]);
+        ] );
     }
 }
