@@ -234,6 +234,7 @@ class TurnoController extends Controller
         $fecha = $request->input('fecha');
         $turno = $request->input('turno');
         $turnonuevo = Turno::where('fecha',$fecha)->where('turno',$turno)->get();
+        dd($turnonuevo);
 
         if (count($turnonuevo)==0)
         {

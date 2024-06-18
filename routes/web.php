@@ -20,7 +20,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::middleware(['auth', 'user'])->prefix('user')->namespace('User')->group(function () {
-	Route::get('/turnonuevo','TurnoController@turnonuevo'); 						//crear un turno nuevo
+	Route::get('/turnonuevo','TurnoController@turnonuevo')->name('turno.nuevo'); 						//crear un turno nuevo
 	Route::get('/turno/editaforadores/{id}/edit','TurnoController@editaforadores'); //Editar aforadores
 	Route::post('/turnonuevo','TurnoController@crearturno');						//Crear un turno nuevo
 	Route::post('/aforadores', 'TurnoController@storeaforadores'); 					//Registrar los aforadores

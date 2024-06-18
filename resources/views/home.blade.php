@@ -64,7 +64,7 @@
                             @if (auth()->user()->role == 'user')
                                 @if ($nuevo)
                                     <!-- Mostrar boton para turno Nuevo  -->
-                                    <a href="{{ url('user/turnonuevo') }}" class="btn btn-primary btn-round">Ingresar Nuevo
+                                    <a href="{{ route('turno.nuevo') }}" class="btn btn-primary btn-round">Ingresar Nuevo
                                         turno</a>
                                 @else
                                     <!-- Mostrar los datos registrados actualmente  -->
