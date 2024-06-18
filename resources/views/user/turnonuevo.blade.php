@@ -23,7 +23,7 @@
                     </div>
                 @endif
                 @if (auth()->user()->role == 'user')
-                    <form method="post" action="{{ url('user/turnonuevo') }}" enctype="multipart/form-data">
+                    <form method="post" action="{{ route('turno.nuevo') }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <input type="hidden" name="efectivo" value = "0">
                         <input type="hidden" name="ctacte" value = "0">
@@ -35,7 +35,7 @@
                         <input type="hidden" name="cheques" value = "0">
                         <input type="hidden" name="otros" value = "0">
                         <div class="form-row">
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <label for="turno">Turno</label>
                                 <select name="turno" id="turno">
                                     <option value="NOCHE"
@@ -50,7 +50,7 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label for="date">Fecha</label>
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
@@ -62,11 +62,18 @@
                             </div>
 
                         </div>
-
+                        <div class="form-row">
+                            <div class="cos-md-8">
+                                <label for="comments">Observaciones:</label>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="comments" value="">
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-row ">
                             <div class="col-md-6">
                                 <button type="submit" class="btn btn-primary">Registrar Aforadores</button>
-                                <a href="{{ url('/home') }}" class="btn btn-default">Cancelar</a>
+                                <a href="{{ route('home') }}" class="btn btn-default">Cancelar</a>
                             </div>
                         </div>
                     </form>

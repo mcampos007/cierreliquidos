@@ -233,21 +233,18 @@ class TurnoController extends Controller
 
         $fecha = $request->input('fecha');
         $turno = $request->input('turno');
+        $comments = $request->input('comments');
         $turnonuevo = Turno::where('fecha',$fecha)->where('turno',$turno)->get();
-        // dd($turnonuevo);
 
         if (count($turnonuevo)==0)
         {
-
             // Como no hay turno, se procede a crear uno nuevo
             $turnonuevo->id = NULL;
             $turnonuevo->turno = $turno;
             $turnonuevo->fecha = $fecha;
             //Como no hay turno, crear el detalle con los valores del surtidor
 
-
             $turnoDetails = $this->detallesdelturno(NULL);
-
 
             $totales = array(
                 'litros' => 0,
@@ -257,29 +254,53 @@ class TurnoController extends Controller
 
         }else{
             //Actualizar Turno
+            if ($request->input('id')){
+                $turnonuevo = Turno::find($request->input('id'));
+                $turnonuevo->fecha = $request->input('fecha');
+                $turnonuevo->turno = $request->input('turno');
+                $turnonuevo->efectivo = $request->input('efectivo');
+                $turnonuevo->ctacte = $request->input('ctacte');
+                $turnonuevo->visa = $request->input('visa');
+                $turnonuevo->electron = $request->input('electron');
+                $turnonuevo->maestro = $request->input('maestro');
+                $turnonuevo->mastercard = $request->input('mastercard');
+                $turnonuevo->american = $request->input('american');
+                $turnonuevo->cheques = $request->input('cheques');
+                $turnonuevo->otros = $request->input('otros');
+                $turnonuevo->save();
 
-            $turnonuevo = Turno::find($request->input('id'));
-            $turnonuevo->fecha = $request->input('fecha');
-            $turnonuevo->turno = $request->input('turno');
-            $turnonuevo->efectivo = $request->input('efectivo');
-            $turnonuevo->ctacte = $request->input('ctacte');
-            $turnonuevo->visa = $request->input('visa');
-            $turnonuevo->electron = $request->input('electron');
-            $turnonuevo->maestro = $request->input('maestro');
-            $turnonuevo->mastercard = $request->input('mastercard');
-            $turnonuevo->american = $request->input('american');
-            $turnonuevo->cheques = $request->input('cheques');
-            $turnonuevo->otros = $request->input('otros');
-            $turnonuevo->save();
+                $turnoDetails = $this->detallesdelturno($turnonuevo->id);
 
-            $turnoDetails = $this->detallesdelturno($turnonuevo->id);
+                $totales = array(
+                    'litros' => $this->total_litros($turnonuevo->id),
+                    'importe' => $this->importe_total($turnonuevo->id),
+                );
 
-            $totales = array(
-                'litros' => $this->total_litros($turnonuevo->id),
-                'importe' => $this->importe_total($turnonuevo->id),
-            );
+                return redirect('/home');
+            }else{
+                //Verificar s
+                $ultimoturno = Turno::latest()->first();
+                if ($ultimoturno->turno== $turno){
+                    //Es un turno nuevo
+                    $turnonuevo->id = NULL;
+                    $turnonuevo->turno = $turno;
+                    $turnonuevo->fecha = $fecha;
+                    //Como no hay turno, crear el detalle con los valores del surtidor
 
-             return redirect('/home');
+                    $turnoDetails = $this->detallesdelturno(NULL);
+
+                    $totales = array(
+                        'litros' => 0,
+                        'importe' => 0,
+                    );
+                    return view('user.aforadores')->with(compact('turnonuevo','turnoDetails','totales'));
+                }else{
+                    $notification = 'No es posible crear el turno solicitado';
+                    return redirect('/home')->with(['notification'=> $notification, 'success'=>true]);
+                }
+
+            }
+
         }
     }
 
