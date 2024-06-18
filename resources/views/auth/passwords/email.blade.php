@@ -21,22 +21,38 @@
                                 <h4>Solicitar blanqueo de Password</h4>
                             </div>
                             <div class="content">
+                                @if (session('status'))
+                                    <div class="alert alert-success">
+                                        {{ session('status') }}
+                                    </div>
+                                @endif
+
+                                @if (session('error'))
+                                    <div class="alert alert-danger">
+                                        {{ session('error') }}
+                                    </div>
+                                @endif
                                 <div class="input-group">
                                     <span class="input-group-addon">
                                         <i class="material-icons">email</i>
                                     </span>
                                     <input id="email" type="email" class="form-control" placeholder="Email..."
                                         name="email" value="{{ old('email') }}" required autofocus>
-                                    @error('email')
+                                    {{-- @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>No podemos encontrar un usuario con esa dirección de correo
                                                 electrónico.</strong>
+                                        </span>
+                                    @enderror --}}
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
                                 <div class="footer text-center">
                                     <button type="submit" class="btn btn-primary">
-                                        {{ __('Enviar Código de Blanqueo') }}
+                                        {{ __('Confirmar') }}
                                     </button>
                                 </div>
 

@@ -35,6 +35,6 @@ class HomeController extends Controller {
 
         $nuevo = count( $turno ) === 0;
 
-        return view( 'home', compact( 'turno', 'turnoscerrados', 'nuevo', 'notification' ) ) ;
+        return view( 'home', compact( 'turno', 'turnoscerrados', 'nuevo', 'notification' ) );
     }
 }

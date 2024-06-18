@@ -39,23 +39,26 @@
 
 
                     </ul>
-                    <!-- Notifiaciones -->
-                    @if (session('success'))
-                        @if (session('notification'))
-                            <div class="alert alert-success custom-alert" role="alert">
-                                <strong>{{ session('notification') }}</strong>
-                            </div>
-                        @endif
-                    @else
-                        @if (session('notification'))
-                            <div class="alert alert-danger custom-alert" role="alert">
-                                <strong>{{ session('notification') }}</strong>
-                            </div>
-                        @endif
-                    @endif
+
+
 
                     <div class="tab-content gallery">
                         <!-- Panel de Pedido Activo -->
+                        <!-- Notifiaciones -->
+                        @if (session('success'))
+                            Estoy en el success
+                            @if (session('notification'))
+                                <div class="alert alert-success custom-alert" role="alert">
+                                    <strong>{{ session('notification') }}</strong>
+                                </div>
+                            @endif
+                        @else
+                            @if ($notification)
+                                <div class="alert alert-danger custom-alert text-center" role="alert">
+                                    <strong>{{ $notification }}</strong>
+                                </div>
+                            @endif
+                        @endif
                         <div class="tab-pane active" id="dashboard">
                             <hr>
                             @if (auth()->user()->role == 'user')
