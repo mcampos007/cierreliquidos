@@ -7,20 +7,23 @@
         {{-- <li>
             <a href="{{ url('/home') }}">Registrar Nuevo Turno</a>
         </li> --}}
+
         <li>
-            <a href="{{ route('admin.product.create') }}">Gestionar Productos</a>
+            <a href="{{ route('admin.products') }}">Gestionar Productos</a>
+        </li>
+        <li>
+            <a href="{{ route('tanques.index') }}">Gestionar Tanques</a>
         </li>
         <li>
             <a href="{{ route('admin.surtidors') }}">Gestionar Surtidores</a>
         </li>
 
         <li>
-            <a href="{{ url('/admin/user') }}">Gestionar Usuarios</a>
+            <a href="{{ route('user.index') }}">Gestionar Usuarios</a>
         </li>
+
+
         {{--
-        <li>
-            <a href="{{ url('/admin/clients')}}">Gestionar Clientes</a>
-        </li>
         <li>
             <a href="{{ url('/admin/pagos')}}">Gestionar Pagos</a>
         </li>

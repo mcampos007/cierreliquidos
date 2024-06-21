@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Surtidor;
 use App\Product;
+use App\Tanque;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -77,7 +78,8 @@ class SurtidorController extends Controller {
         //
         $surtidor = Surtidor::findOrFail( $id );
         $products = Product::all();
-        return view( 'admin.surtidors.edit' )->with( compact( 'surtidor', 'products' ) );
+        $tanques = Tanque::all();
+        return view( 'admin.surtidors.edit' )->with( compact( 'surtidor', 'products', 'tanques' ) );
     }
 
     /**
@@ -94,8 +96,10 @@ class SurtidorController extends Controller {
         $surtidor->name = $request->input( 'name' );
         $surtidor->product_id = $request->input( 'producto' );
         $surtidor->lectura_actual = $request->input( 'lectura_actual' );
+        $surtidor->tanque_id = $request->input( 'tanque_id' );
         $surtidor->save();
-        return redirect( '/admin/surtidors' );
+        return redirect()->route( 'admin.surtidors' ) ->with( 'success', 'Surtidor actualizado exitosamente.' );
+        ;
     }
 
     /**
@@ -116,5 +120,28 @@ class SurtidorController extends Controller {
         }
 
         return redirect()->route( 'admin.surtidors' )->with( compact( 'notification' ) );
+    }
+
+    public function changetanque( $id ) {
+        $surtidor = Surtidor::find( $id );
+        $tanques = Tanque::all();
+
+        // Verifica si el surtidor fue encontrado
+        if ( !$surtidor ) {
+            // Si no se encuentra, redirige con un mensaje de error
+            return redirect()->back()->with( 'error', 'Surtidor no encontrado.' );
+        }
+
+        // Si se encuentra, retorna la vista con los detalles del surtidor
+        return view( 'admin.surtidors.changetanque', compact( 'surtidor', 'tanques' ) );
+    }
+
+    public function updatetanque( Request $request, $id ) {
+        $surtidor = Surtidor::find( $id );
+        $surtidor->tanque_id = $request->input( 'tanque_id' );
+        $surtidor->save();
+        return redirect()->route( 'admin.surtidors' ) ->with( 'success', 'Surtidor actualizado exitosamente.' );
+        ;
+
     }
 }

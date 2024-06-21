@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Listado de Surtidores')
+@section('title', 'Listado de Tanques')
 
 @section('body-class', 'product-page')
 
@@ -12,11 +12,19 @@
     <div class="main main-raised">
         <div class="container">
             <div class="section text-center">
-                <h2 class="title">Listado de Surtidores </h2>
+                <h2 class="title">Tanques </h2>
                 <div class="card-body">
                     @if (session('notification'))
                         <div class="alert alert-success" role="alert">
                             {{ session('notification') }}
+                        </div>
+                    @endif
+
+                </div>
+                <div class="card-body">
+                    @if (session('success'))
+                        <div class="alert alert-success" role="info">
+                            {{ session('success') }}
                         </div>
                     @endif
 
@@ -28,50 +36,41 @@
                             <strong>Error:!!</strong>{{ session('msj') }}
                         </div>
                     @endif
-                    @if (session()->has('success'))
-                        <div class="alert alert-info" role="info">
-                            <strong>Aviso:!!</strong>{{ session('success') }}
-                        </div>
-                    @endif
                     <div class="row ">
-                        @if (auth()->user()->role == 'admin')
-                            <a href="{{ route('admin.surtidors.create') }}" class="btn btn-primary btn-round">
-                            @else
-                                <a href="#" class="btn btn-primary btn-round">
-                        @endif
-                        Nuevo Surtidor</a>
+                        <a href="{{ route('tanques.create') }}" class="btn btn-primary btn-round"> Nuevo Tanque</a>
                         <table class="table-responsive table-hover">
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
                                     <th class="col-md-2 text-center">Nombre</th>
-                                    <th class="col-md-2 text-center">Product</th>
-                                    <th class="col-md-2 text-center">Tanque</th>
-                                    <th class="col-md-2 text-center">Lectura Actual</th>
+                                    <th class="col-md-2 text-center">Capacidad</th>
+                                    <th class="col-md-2 text-center">Producto</th>
                                     <th class="col-md-2">Opciones</th>
+
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($surtidors as $surtidor)
+                                @foreach ($tanques as $tanque)
                                     <tr>
-                                        <td class="text-center">{{ $surtidor->id }}</td>
-                                        <td class="text-center">{{ $surtidor->name }}</td>
-                                        <td class="text-center">{{ $surtidor->product->name }}</td>
-                                        <td class="text-center">
-                                            {{ $surtidor->tanque ? $surtidor->tanque->nombre : 'No Definido' }}</td>
-
-                                        <td class="text-center">{{ $surtidor->lectura_actual }}</td>
-
+                                        <td class="text-center">{{ $tanque->id }}</td>
+                                        <td class="text-center">{{ $tanque->nombre }}</td>
+                                        <td class="text-center">{{ $tanque->capacidad }}</td>
+                                        <td class="text-center">{{ $tanque->product->name }}</td>
                                         <td class="td-actions text-right">
                                             <form method="post"
-                                                action="{{ route('admin.surtidors.delete', ['id' => $surtidor->id]) }}">
+                                                action="{{ route('tanques.destroy', ['id' => $tanque->id]) }}">
                                                 {{ csrf_field() }}
                                                 {{ method_field('DELETE') }}
 
-                                                <a href=" {{ route('admin.surtidors.edit', ['id' => $surtidor->id]) }}"
+                                                <a href=" {{ route('tanques.edit', ['id' => $tanque->id]) }}"
                                                     type="button" rel="tooltip" title="Editar"
                                                     class="btn btn-success btn-simple btn-xs">
                                                     <i class="fa fa-edit"></i>
+                                                </a>
+                                                <a href=" {{ route('tanques.surtidores', ['id' => $tanque->id]) }}"
+                                                    type="button" rel="tooltip" title="Surtdores del Tanque"
+                                                    class="btn btn-success btn-simple btn-xs">
+                                                    <i class="material-icons">local_gas_station</i>
                                                 </a>
                                                 <button type="submit" rel="tooltip" title="Eliminar"
                                                     class="btn btn-danger btn-simple btn-xs">
@@ -79,14 +78,14 @@
                                                 </button>
                                             </form>
                                         </td>
+
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                        <div class="pagination">
-                            {{ $surtidors->links() }}
-                        </div>
+
                     </div>
+
                 </div>
 
             </div>

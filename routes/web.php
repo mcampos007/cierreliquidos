@@ -48,6 +48,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->namespace('Admin')->group
 	Route::get('/surtidors/{id}/edit', "SurtidorController@edit")->name('admin.surtidors.edit');    	    //Edita Surtidor
 	Route::put('/surtidors/update/{id}', "SurtidorController@update")->name('admin.surtidors.update');	    //Update Surtidor
     Route::delete('/surtidors/{id}/delete', "SurtidorController@delete")->name('admin.surtidors.delete');   //Delete surtidor
+    Route::get('/surtidors/{id}/tanque/change', 'SurtidorController@changetanque')->name('admin.surtidors.changetanque');
+    Route::put('/surtidors/{id}/tanque/change', 'SurtidorController@updatetanque')->name('admin.surtidors.updatetanque');
 
 	//Route::get('/turnonuevo','TurnoController@turnonuevo'); 						//crear un turno nuevo
 
@@ -57,6 +59,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->namespace('Admin')->group
 	//Route::get('/turno/cerrarturno/{id}', 'TurnoController@cerrarturno');			//Llamada al form para Cerrar Turno
 	//Route::post('/turno/cerrarturno', 'TurnoController@confirmarcierreturno');		//Confirmar cierre de turno
     Route::resource('/user', 'UserController');
+
+    //Tanques
+    Route::resource('tanques', 'TanqueController');
+    Route::get('/tanques/surtidors/{id}', 'TanqueController@surtidores')->name('tanques.surtidores');
+
 
     Route::get('/page-expired', function () {
         return view('exceptions/errors419');
