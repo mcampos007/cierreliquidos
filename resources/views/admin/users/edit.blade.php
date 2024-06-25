@@ -28,7 +28,7 @@
                         <span>{{ session('success') }}</span>
                     </div>
                 @endif
-                <form method="post" action="{{ url('admin/user/' . $usuario->id) }}" enctype="multipart/form-data"
+                <form method="post" action="{{ route('user.update', ['id' => $usuario->id]) }}" enctype="multipart/form-data"
                     class="text-center">
                     {{ csrf_field() }}
                     @method('PUT')
@@ -48,12 +48,24 @@
                                     value="{{ old('email', $usuario->email) }}">
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-sm-2">
+                            <label class="control-label">Rol:</label>
+                            <select class="form-select" aria-label="Default select example" id="role" name="role">
+
+                                <option value="admin" {{ $usuario->role === 'admin' ? 'selected' : '' }}>admin</option>
+                                <option value="user" {{ $usuario->role === 'user' ? 'selected' : '' }}>user</option>
+
+                            </select>
+                        </div>
 
                     </div>
 
 
                     <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
-                    <a href=" {{ url('/admin/user') }}" class="btn btn-default">Regresar</a>
+                    <a href=" {{ route('user.index') }}" class="btn btn-default">Regresar</a>
                 </form>
 
             </div>

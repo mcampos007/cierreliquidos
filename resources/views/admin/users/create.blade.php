@@ -67,20 +67,22 @@
                         </div>
                     </div>
                     <div class="row text-left">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="role">
-                                Admin
-                            </label>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Crear Usuario</button>
-                    <a href=" {{ url('/admin/user') }}" class="btn btn-default">Regresar</a>
-                </form>
+                        <label class="control-label">Rol:</label>
+                        <select class="form-select" aria-label="Default select example" id="role" name="role">
 
+                            <option value="admin">admin</option>
+                            <option value="user" selected>user</option>
+
+                        </select>
+                    </div>
             </div>
+            <button type="submit" class="btn btn-primary">Crear Usuario</button>
+            <a href=" {{ route('user.index') }}" class="btn btn-default">Regresar</a>
+            </form>
 
         </div>
+
+    </div>
 
     </div>
 

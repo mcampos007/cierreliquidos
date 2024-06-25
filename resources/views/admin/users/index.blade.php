@@ -59,7 +59,8 @@
                                         <td class="text-center">{{ $usuario->role }}</td>
 
                                         <td class="td-actions text-center">
-                                            <form method="post" action="{{ url('/admin/user/' . $usuario->id) }}">
+                                            <form method="post"
+                                                action="{{ route('user.destroy', ['id' => $usuario->id]) }}">
                                                 {{ csrf_field() }}
                                                 {{ method_field('DELETE') }}
 

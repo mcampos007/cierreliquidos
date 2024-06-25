@@ -97,10 +97,11 @@ class UserController extends Controller {
 
     public function update( Request $request, $id ) {
         //
-        $data = $request->only( [ 'name', 'email' ] );
+        $data = $request->only( [ 'name', 'email', 'role' ] );
         $user = User::find( $id );
         $user->name = $data[ 'name' ];
         $user->email = $data[ 'email' ];
+        $user->role = $data[ 'role' ];
         $user->save();
         return redirect()->back()->with( 'success', 'Los datos del cliente se actualizaron correctamente!!' );
     }
@@ -123,5 +124,29 @@ class UserController extends Controller {
             return redirect()->back()->with( 'error', 'Hubo un problema al eliminar el usuario.' );
         }
 
+    }
+
+    public function changeRole( $id ) {
+
+        // Encuentra el usuario por ID
+        $user = User::find( $id );
+
+        // Verifica si el usuario existe
+        if ( !$user ) {
+            return redirect()->back()->with( 'error', 'Usuario no encontrado.' );
+        }
+
+        // Cambia el rol de 'user' a 'admin' y viceversa
+        if ( $user->role === 'user' ) {
+            $user->role = 'admin';
+        } else {
+            $user->role = 'user';
+        }
+
+        // Guarda los cambios
+        $user->save();
+
+        // Redirige de vuelta con un mensaje de éxito
+        return redirect()->back()->with( 'success', 'Rol cambiado exitosamente.' );
     }
 }
