@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 use App\Turno;
 use App\Surtidor;
 use App\TurnoDetail;
+use App\Tanque;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -165,11 +166,12 @@ class TurnoController extends Controller
     public function editaforadores($id){
         // Obtener el turno y validar su existencia
         $turno = Turno::find($id);
+        $userRole = auth()->user()->role;
         $notification = "";
 
         if (!$turno) {
             $notification = "No existen aforadores a visualizar para el turno";
-        } elseif ($turno->status) {
+        } elseif ($turno->status && $userRole !== 'admin') {
             $notification = "El turno se encuentra cerrado!!";
         }
 
@@ -382,7 +384,10 @@ class TurnoController extends Controller
                 $detalle = TurnoDetail::where('turno_id',$turnonuevo->id)->where('surtidor_id',  $surtidores[$key])->first();
                 //$detalle->turno_id = $turnonuevo->id;
                 //$detalle->surtidor_id = $surtidores[$key];
-                $detalle->lectura_inicial = $this->lectura_actual_surtidor($surtidores[$key]);
+                if (!$detalle->lectura_inicial){
+                    $detalle->lectura_inicial = $this->lectura_actual_surtidor($surtidores[$key]);
+                }
+
                 $detalle->lectura_final = $lecturas[$key];
                 $detalle->price=$prices[$key];
                 if ($detalle->lectura_final < $detalle->lectura_inicial )
@@ -433,13 +438,44 @@ class TurnoController extends Controller
         //return redirect($url)->with(compact('id'));
     }
 
+    public function calcularTotalLitros($id, $detalles){
+        $litros = 0;
+        foreach($detalles as $detalle){
+           if ($detalle->surtidor->tanque->id == $id){
+            //sumar
+            $litros = $litros + $detalle->lectura_final - $detalle->lectura_inicial;
+           }
+        }
+
+        return $litros;
+
+    }
+    public function total_por_tanques($detalles){
+
+        $tanques = Tanque::all();
+        foreach ($tanques as $tanque) {
+            // Asigna el valor de total_litros a cada tanque.
+            // Aquí puedes usar una función o algún cálculo específico para determinar el valor de total_litros.
+
+            $tanque->total_litros = $this->calcularTotalLitros($tanque->id, $detalles);
+
+        }
+       return $tanques;
+
+    }
+
     public function cierreAforadoresPDF($id)
     {
 
-        $detalles = turnoDetail::where('turno_id', $id)->get();//   Data::all(); // Reemplaza con la consulta que necesites
-        $turno = turno::find($id);//   Data::all(); // Reemplaza con la consulta que necesites
+        $detalles = turnoDetail::where('turno_id', $id)->get();         //   Data::all(); // Reemplaza con la consulta que necesites
+        $turno = turno::find($id);                                      //   Data::all(); // Reemplaza con la consulta que necesites
+        $totallitros = $this->total_litros($id);                        //  Total de Listros
+        $importetotal = $this->importe_total($id);
+        $total_tanques = $this->total_por_tanques($detalles);
+        // Obtener la fecha y hora actual
+        $currentDateTime = Carbon::now()->format('d-m-Y H:i:s');
 
-        $pdf = PDF::loadView('user.pdfCierres', compact('turno', 'detalles'));
+        $pdf = PDF::loadView('user.pdfCierres', compact('turno', 'detalles', 'totallitros', 'importetotal', 'total_tanques', 'currentDateTime'));
 
         // Guarda el PDF temporalmente en el servidor
         $rptname = 'app/public/cierres/turno_'.$id.'.pdf';
@@ -447,10 +483,6 @@ class TurnoController extends Controller
         //$pdf->save($pdfPath);
         return $pdf->stream('reporte.pdf');
 
-
-
-        //$pdf->download('reporte.pdf');
-        // return $pdf->stream('reporte.pdf');
 
         return redirect('/home');
     }

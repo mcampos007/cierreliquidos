@@ -21,7 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware(['auth', 'user'])->prefix('user')->namespace('User')->group(function () {
 	Route::get('/turnonuevo','TurnoController@turnonuevo')->name('turno.nuevo'); 						//crear un turno nuevo
-	Route::get('/turno/editaforadores/{id}/edit','TurnoController@editaforadores'); //Editar aforadores
+	Route::get('/turno/editaforadores/{id}/edit','TurnoController@editaforadores')->name('editaaforadores'); //Editar aforadores
 	Route::post('/turnonuevo','TurnoController@crearturno')->name('turno.nuevo');						//Crear un turno nuevo
 	Route::post('/aforadores', 'TurnoController@storeaforadores')->name('aforadores'); 					//Registrar los aforadores
 	Route::get('/turno/edit/{id}', 'TurnoController@editarturno')->name('showturno');					//Editar Turno
@@ -54,8 +54,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->namespace('Admin')->group
 	//Route::get('/turnonuevo','TurnoController@turnonuevo'); 						//crear un turno nuevo
 
 	//Route::post('/turnonuevo','TurnoController@crearturno');						//Crear un turno nuevo
-	//Route::post('/aforadores', 'TurnoController@storeaforadores'); 					//Registrar los aforadores
-	Route::get('/turno/edit/{id}', 'TurnoController@editarturno')->name('editarturno');					//Editar Turno
+	//Route::post('/aforadores', 'TurnoController@storeaforadores'); 					    //Registrar los aforadores
+	Route::get('/turno/edit/{id}', 'TurnoController@editarturno')->name('editarturno');		//Editar Turno
+    Route::put('/turno/edit/{id}', 'TurnoController@update')->name('updateturno');          //Update turno
 	//Route::get('/turno/cerrarturno/{id}', 'TurnoController@cerrarturno');			//Llamada al form para Cerrar Turno
 	//Route::post('/turno/cerrarturno', 'TurnoController@confirmarcierreturno');		//Confirmar cierre de turno
     Route::resource('/user', 'UserController');

@@ -46,10 +46,14 @@
                         <!-- Panel de Pedido Activo -->
                         <!-- Notifiaciones -->
                         @if (session('success'))
-                            Estoy en el success
+                            <div class="alert alert-success custom-alert" role="alert">
+
+                                <strong>{{ session('success') }}</strong>
+                            </div>
                             @if (session('notification'))
                                 <div class="alert alert-success custom-alert" role="alert">
                                     <strong>{{ session('notification') }}</strong>
+                                    <strong>{{ session('success') }}</strong>
                                 </div>
                             @endif
                         @else
@@ -146,9 +150,7 @@
                         <!-- Panel de Turnos Cerrados -->
                         {{ $turnoscerrados }}
                         <div class="tab-pane text-center" id="remitos">
-
                             <hr>
-
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -165,18 +167,18 @@
                                             <td class="text-center">{{ $turnoclose->turno }}</td>
                                             <td class="text-center">{{ $turnoclose->fecha }}</td>
                                             <td>
-                                                <a href="{{ url('/user/turno/edit/' . $turnoclose->id) }}" type="button"
-                                                    rel="tooltip" title="Ver Importes"
+                                                <a href="{{ route('editarturno', ['id' => $turnoclose->id]) }}"
+                                                    type="button" rel="tooltip" title="Ver Importes"
                                                     class="btn btn-success btn-simple btn-xs">
                                                     <span class="material-icons md-dark">paid</span>
                                                 </a>
-                                                <a href=" {{ url('/user/turno/editaforadores/' . $turnoclose->id . '/edit') }}"
+                                                <a href=" {{ route('editaaforadores', ['id' => $turnoclose->id]) }}"
                                                     type="button" rel="tooltip" title="Ver Aforadores"
                                                     class="btn btn-success btn-simple btn-xs">
                                                     <span class="material-icons md-dark">format_list_numbered</span>
                                                 </a>
-                                                <button id="open-pdf" data-id={{ $turnoclose->id }}
-                                                    class="btn btn-success btn-simple btn-xs" rel="tooltip"
+                                                <button data-id={{ $turnoclose->id }}
+                                                    class="open-pdf btn btn-success btn-simple btn-xs" rel="tooltip"
                                                     title="Imprimir Turno"> <span
                                                         class="material-icons md-dark">print</span></button>
 
@@ -202,7 +204,7 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-            $('#open-pdf').on('click', function() {
+            $('.open-pdf').on('click', function() {
                 var turnoId = $(this).data('id'); // Obtener el ID del turno
                 var url = '/user/turno/cierres/pdf/' + turnoId;
 
@@ -213,7 +215,7 @@
                 setTimeout(function() {
                     printWindow.close(); // Cerrar la ventana
                     window.location.href = '/home'; // Redirigir a la página de inicio
-                }, 10000); // Tiempo en milisegundos
+                }, 1000000); // Tiempo en milisegundos
             });
         });
     </script>

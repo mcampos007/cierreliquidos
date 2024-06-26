@@ -30,8 +30,8 @@
                         {{ $notification }}
                     </div>
                 @endif
-                @if (auth()->user()->role == 'user')
-                    <form method="post" action="{{ url('user/aforadores') }}" enctype="multipart/form-data">
+                @if (auth()->user()->role == 'admin' || auth()->user()->role == 'user')
+                    <form method="post" action="{{ route('aforadores') }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <input type="hidden" name="fecha" value="{{ $turno->fecha }}" />
                         <input type="hidden" name="turno" value = "{{ $turno->turno }}" />
@@ -75,7 +75,8 @@
                                                 <input type="number" name="l_final[]" id="l_final_{{ $key + 1 }}"
                                                     step="0.01" value= "{{ old('l_final[]', $Detail->lectura_final) }}"
                                                     onchange="recalculateImporte({{ $key + 1 }}) "
-                                                    style="width: 120px;" {{ $turno->status ? 'disabled' : '' }} />
+                                                    style="width: 120px;"
+                                                    {{ $turno->status && auth()->user()->role === 'user' ? 'disabled' : '' }} />
                                             </td>
                                             <!-- Litros -->
                                             <td class="text-center">
@@ -111,7 +112,8 @@
                         <div class="form-row ">
                             <div class="col-md-6">
                                 <button type="submit" class="btn btn-primary"
-                                    {{ $turno->status ? 'disabled' : '' }}>Actualizar Aforadores</button>
+                                    {{ $turno->status && auth()->user()->role === 'user' ? 'disabled' : '' }}>Actualizar
+                                    Aforadores</button>
                                 <a href="{{ url('/home') }}" class="btn btn-default">Cancelar</a>
                             </div>
 

@@ -36,9 +36,11 @@
                         </div>
                     @endif
 
-                    <form method="post" action="{{ url('admin/turnoupdated') }}" enctype="multipart/form-data">
+                    <form method="post" action="{{ route('updateturno', ['id' => $turno->id]) }}"
+                        enctype="multipart/form-data">
                         {{ csrf_field() }}
-                        <input type="hidden" name="id" id="id" value="{{ $turno->id }}">
+                        <input type="hidden" value={{ $turno->user_id }} name="user_id">
+                        @method('PUT')
                         <div class="row">
                             <div class="col-sm-3">
                                 <div class="form-group label-floating">

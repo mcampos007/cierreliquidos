@@ -7,12 +7,20 @@
         /* Agrega tus estilos aquí */
         body {
             font-family: Arial, sans-serif;
-            font-size: 12px;
+            font-size: 10px;
             /* Tamaño de la fuente */
+            margin: 10px;
+            /* Ajusta este valor según tus necesidades */
         }
 
         h1 {
-            font-size: 18px;
+            font-size: 16px;
+        }
+
+        h3 {
+            font-size: 10px;
+            font-weight: bold;
+            font-style: italic;
         }
 
         table {
@@ -43,11 +51,19 @@
         .text-right {
             text-align: right;
         }
+
+        @page {
+            margin-top: 5mm;
+            /* Ajusta este valor según tus necesidades */
+            margin-bottom: 5mm;
+            /* Ajusta este valor según tus necesidades */
+        }
     </style>
 </head>
 
 <body>
-    <h1>Cierre de Turno:{{ $turno->turno }} Fecha: {{ $turno->fecha }}</h1>
+    <h1>PETRASOL SRL</h1>
+    <h2>Cierre de Turno:{{ $turno->turno }} Fecha: {{ $turno->fecha }}</h2>
     <table>
         <thead>
             <tr>
@@ -70,14 +86,50 @@
                     <td class="text-right">{{ $item->lectura_inicial }}</td>
                     <td class="text-right">{{ $item->lectura_final }}</td>
                     <td class="text-right">{{ round($item->lectura_final - $item->lectura_inicial, 2) }}</td>
-                    <td class="text-right">{{ round($item->price * ($item->lectura_final - $item->lectura_inicial), 2) }}
+                    <td class="text-right">
+                        {{ round($item->price * ($item->lectura_final - $item->lectura_inicial), 2) }}
                     </td>
-
+                </tr>
+            @endforeach
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="text-right">{{ $totallitros }}</td>
+                <td class="text-right">{{ $importetotal }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <h2>Resumen de Tanques</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Tanque</th>
+                <th>Producto</th>
+                <th>Litros</th>
+                <th>Tanque</th>
+                <th>Producto</th>
+                <th>Litros</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($total_tanques->chunk(2) as $chunk)
+                <tr>
+                    @foreach ($chunk as $tanque)
+                        <td>Tanque Nº {{ $tanque->id }}</td>
+                        <td>{{ $tanque->product->name }}</td>
+                        <td class="text-right">{{ $tanque->total_litros }}</td>
+                    @endforeach
+                    @if ($chunk->count() == 1)
+                        <td colspan="3"></td> <!-- Empty cells if odd number of tanks -->
+                    @endif
                 </tr>
             @endforeach
         </tbody>
     </table>
-    <h1>Responsable:{{ $turno->user->name }} </h1>
+    <h3>Fecha y Hora <b><i>{{ $currentDateTime }}</i></b> - Responsable:{{ $turno->user->name }} </h3>
 </body>
 
 </html>
