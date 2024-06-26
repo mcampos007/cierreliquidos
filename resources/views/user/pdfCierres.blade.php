@@ -97,8 +97,8 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="text-right">{{ $totallitros }}</td>
-                <td class="text-right">{{ $importetotal }}</td>
+                <td class="text-right">{{ number_format($totallitros, 2) }}</td>
+                <td class="text-right">{{ number_format($importetotal, 2) }}</td>
             </tr>
         </tbody>
     </table>
@@ -118,9 +118,9 @@
             @foreach ($total_tanques->chunk(2) as $chunk)
                 <tr>
                     @foreach ($chunk as $tanque)
-                        <td>Tanque Nº {{ $tanque->id }}</td>
+                        <td> {{ $tanque->nombre }}</td>
                         <td>{{ $tanque->product->name }}</td>
-                        <td class="text-right">{{ $tanque->total_litros }}</td>
+                        <td class="text-right">{{ number_format($tanque->total_litros, 2) }}</td>
                     @endforeach
                     @if ($chunk->count() == 1)
                         <td colspan="3"></td> <!-- Empty cells if odd number of tanks -->
