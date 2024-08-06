@@ -22,6 +22,9 @@
             <a href="{{ route('user.index') }}">Gestionar Usuarios</a>
         </li>
 
+        <li>
+            <a href="{{ route('admin.turnoscheck') }}">Controlar Cierres de Turnos</a>
+        </li>
 
         {{--
         <li>

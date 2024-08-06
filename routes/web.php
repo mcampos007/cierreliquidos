@@ -59,6 +59,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->namespace('Admin')->group
     Route::put('/turno/edit/{id}', 'TurnoController@update')->name('updateturno');          //Update turno
 	//Route::get('/turno/cerrarturno/{id}', 'TurnoController@cerrarturno');			//Llamada al form para Cerrar Turno
 	//Route::post('/turno/cerrarturno', 'TurnoController@confirmarcierreturno');		//Confirmar cierre de turno
+    Route::get('/turnoscheck', 'TurnoController@turnocheck')->name('admin.turnoscheck');   //Control de Cierres de Turnos
+    Route::post('/verificaraforador', 'TurnoController@verificaraforador')->name('verificaraforador');   //Control de Cierres de Turnos
+    Route::post('/actualizaraforador', 'TurnoController@actualizaraforador')->name('actualizaraforador');   //Control de Cierres de Turnos
     Route::resource('/user', 'UserController');
 
     //Tanques
