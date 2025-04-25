@@ -14,7 +14,7 @@ class UsersTableSeeder extends Seeder {
         //
         User::create( [
             'name' => 'mario',
-            'email'=> 'mcampos.infocam@gmail.com',
+            'email'=> 'mcampos.infocam@infocam.com.ar',
             'password' => bcrypt( 'Cc2024Inf' ),
             // 'admin' => true,
             'role' => 'admin'
@@ -27,8 +27,8 @@ class UsersTableSeeder extends Seeder {
             'role' => 'admin'
         ] );
         User::create( [
-            'name' => 'playero',
-            'email'=> 'playero@gmail.com',
+            'name' => 'playeroll',
+            'email'=> 'playeroll@infocam.com.ar',
             'password' => bcrypt( '1234qwer' ),
             // 'admin' => true,
             'role' => 'user'
